@@ -64,17 +64,3 @@ def calc_miss(clf, count_vect, tfidf_transformer, docs_set):
     return miss
 
 
-if __name__ == '__main__':
-
-    data_path = '/Users/ivoliv/AI/insera/data/SpeechLabelingService/data'
-    train, test = get_splits(data_path)
-
-    count_vect, X_train_counts = create_counts(train)
-    tfidf_transformer, X_train_tfidf = transform_and_tfidf(X_train_counts)
-
-    clf = train_model(X_train_tfidf, train['tag_id'])
-
-    tr_miss = calc_miss(clf, count_vect, tfidf_transformer, train)
-    te_miss = calc_miss(clf, count_vect, tfidf_transformer, test)
-
-    print('[{:.2%}, {:.2%}]'.format(tr_miss, te_miss))

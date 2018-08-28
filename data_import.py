@@ -61,10 +61,3 @@ def create_split_files(data_path, train, valid):
     print('Sizes:', train.shape, valid.shape)
 
 
-if __name__ == '__main__':
-
-    data_path = '/Users/ivoliv/AI/insera/data/SpeechLabelingService'
-    train_file = 'training.txt'
-
-    train, valid = normalize_and_split(data_path, 10)
-    create_split_files(data_path, train, valid)
