@@ -33,9 +33,7 @@ def create_splits(df, test_size=0.10):
 def normalize_and_split(data_path, train_file, test_size=0.10):
 
     input_data = read_from_file(data_path, train_file)
-
     df = pd.DataFrame(input_data, columns=['tag', 'statement'])
-
     train, valid = create_splits(df, test_size)
 
     return train, valid

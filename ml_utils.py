@@ -9,9 +9,7 @@ def show_sample(clf, count_vect, tfidf_transformer, dataset, to=10):
     X_tfidf = tfidf_transformer.transform(X_counts)
 
     predicted = clf.predict(X_tfidf)
-
     comp = np.vstack((dataset['tag_id'][:to], predicted))
-
     comp = dataset.merge(pd.DataFrame(comp.T), left_index=True, right_index=True)
 
     print('\nCorrect classifications:')
