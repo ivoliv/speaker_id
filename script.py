@@ -14,8 +14,6 @@ import torch.optim as optim
 
 from torchtext import data, vocab
 
-import matplotlib.pyplot as plt
-get_ipython().run_line_magic('matplotlib', 'inline')
 
 import os, sys
 import pdb
@@ -357,13 +355,9 @@ for epoch in range(1, epochs + 1):
 # In[23]:
 
 
-plt.plot(losses)
-plt.legend(['train', 'valid'])
 
 
 # In[24]:
 
 
-plt.plot(missclass)
-plt.legend(['train', 'valid'])
 

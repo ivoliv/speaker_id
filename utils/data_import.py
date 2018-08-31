@@ -55,6 +55,7 @@ def import_imbd(train_file, to=None, test_size=0.10):
 
 def create_split_files(data_path, train, valid):
 
+    print('Writing files to', os.path.join(data_path, 'data'))
     train.to_csv(os.path.join(data_path, 'data', 'train.csv'), index=False)
     valid.to_csv(os.path.join(data_path, 'data', 'valid.csv'), index=False)
     print('Train and validation files written to disk.')
