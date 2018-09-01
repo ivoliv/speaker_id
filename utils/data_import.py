@@ -60,6 +60,8 @@ def create_split_files(data_path, train, valid):
     valid.to_csv(os.path.join(data_path, 'data', 'valid.csv'), index=False)
     print('Train and validation files written to disk.')
     print('Sizes:', train.shape, valid.shape)
+    
+    return 
 
 
 def import_wikitext(window_size=301, lines=100):
