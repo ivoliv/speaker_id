@@ -68,13 +68,13 @@ valid.head()
 # In[7]:
 
 
-data_import.create_split_files(org_data_path, train, valid)
+data_import.create_split_files('./data', train, valid)
 
 
 # In[8]:
 
 
-data_path = '/Users/ivoliv/AI/insera/data/SpeechLabelingService/data'
+data_path = './data'
 
 
 # In[9]:
