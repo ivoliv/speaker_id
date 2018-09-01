@@ -14,9 +14,6 @@ import torch.optim as optim
 
 from torchtext import data, vocab
 
-import matplotlib.pyplot as plt
-get_ipython().run_line_magic('matplotlib', 'inline')
-
 import os, sys
 import pdb
 import pandas as pd
@@ -37,6 +34,8 @@ if cuda:
     print('Device:', torch.cuda.get_device_name(torch.cuda.current_device()))
 else:
     print('No cuda.')
+    import matplotlib.pyplot as plt
+    get_ipython().run_line_magic('matplotlib', 'inline')
 
 
 # In[4]:
@@ -463,36 +462,15 @@ for epoch in range(1, epochs + 1):
 # In[ ]:
 
 
-plt.plot(losses)
-plt.legend(['train', 'valid'])
+if not cuda:
+    plt.plot(losses)
+    plt.legend(['train', 'valid'])
 
 
 # In[ ]:
 
 
-plt.plot(missclass)
-plt.legend(['train', 'valid'])
-
-
-# In[ ]:
-
-
-import spacy
-nlp = spacy.load('en')
-
-def predict_sentiment(sentence):
-    tokenized = [tok.text for tok in nlp.tokenizer(sentence)]
-    indexed = [TEXT.vocab.stoi[t] for t in tokenized]
-    tensor = torch.LongTensor(indexed)
-    if cuda:
-        tensor = tensor.cuda()
-    tensor = tensor.unsqueeze(1)
-    prediction = model(tensor)
-    return prediction.item()
-
-
-# In[ ]:
-
-
-predict_sentiment("This film is terrible")
+if not cuda:
+    plt.plot(missclass)
+    plt.legend(['train', 'valid'])
 
