@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[1]:
+# In[2]:
 
 
 import utils.data_import as data_import
@@ -19,16 +19,17 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 
 import os, sys
 import pdb
+import pandas as pd
 
 
-# In[4]:
+# In[3]:
 
 
-emb_dim = 50
-hidden_dim = 64
+emb_dim = 200
+hidden_dim = 300
 num_linear = 3
 
-batch_size = 32
+batch_size = 16
 
 cuda = torch.cuda.is_available()
 if cuda:
@@ -38,22 +39,31 @@ else:
     print('No cuda.')
 
 
-# In[5]:
+# In[4]:
 
 
 org_data_path = '/Users/ivoliv/AI/insera/data/SpeechLabelingService'
-ORIG_DATA = False  # True: original data, False: IMDB dataset
+ORIG_DATA = 2  # 0: original data, 1: IMDB dataset, 2: wikitext
+
+
+# In[5]:
+
+
+if ORIG_DATA == 0:
+    train_file = 'training.txt'
+    train, valid = data_import.normalize_and_split(org_data_path, train_file, test_size=.20)
+elif ORIG_DATA == 1:
+    train_file = '/Users/ivoliv/Datasets/imbd_csv/movie_reviews.csv'
+    train, valid = data_import.import_imbd(train_file, to=10000, test_size=.20)
+elif ORIG_DATA == 2:
+    df = data_import.import_wikitext(window_size=201, lines=500)
+    train, valid = data_import.create_splits(df, test_size=.20)
 
 
 # In[6]:
 
 
-if ORIG_DATA:
-    train_file = 'training.txt'
-    train, valid = data_import.normalize_and_split(org_data_path, train_file, test_size=.20)
-else:
-    train_file = '/Users/ivoliv/Datasets/imbd_csv/movie_reviews.csv'
-    train, valid = data_import.import_imbd(train_file, to=10000, test_size=.20)
+valid.head()
 
 
 # In[7]:
@@ -108,11 +118,11 @@ print('Number of classes:', n_classes)
 
 
 print('len(trn):', len(train))
-print('len(vld):', len(test))
-#print(vars(train[0]))
+print('len(test):', len(test))
 print(TEXT.vocab.freqs.most_common(20))
 print(TEXT.vocab.itos[:10])
-print(LABEL.vocab.stoi)
+#print(vars(train[0]))
+#print(LABEL.vocab.stoi)
 
 
 # In[14]:
@@ -127,7 +137,9 @@ TEXT.vocab.vectors[TEXT.vocab.stoi['the']]
 
 
 trn, vld = train.split(0.7)
-len(trn.examples), len(vld.examples)
+print('len(trn):', len(trn))
+print('len(vld):', len(vld))
+print('len(test):', len(test))
 
 
 # In[16]:
@@ -142,7 +154,7 @@ train_iter, val_iter, test_iter = data.BucketIterator.splits(
 )
 
 
-# In[24]:
+# In[17]:
 
 
 class BatchGenerator:
@@ -163,14 +175,14 @@ class BatchGenerator:
             yield (X, y)
 
 
-# In[25]:
+# In[18]:
 
 
 train_dl = BatchGenerator(train_iter, 'statement', 'tag_id')
 valid_dl = BatchGenerator(val_iter, 'statement', 'tag_id')
 
 
-# In[26]:
+# In[19]:
 
 
 # Requires padding to be set to 100
@@ -198,7 +210,7 @@ class SimpleForward(nn.Module):
         
 
 
-# In[27]:
+# In[20]:
 
 
 class CNN(nn.Module):
@@ -252,7 +264,7 @@ class CNN(nn.Module):
         return F.log_softmax(out, dim=-1)
 
 
-# In[28]:
+# In[21]:
 
 
 class simpleRNN(nn.Module):
@@ -282,32 +294,42 @@ class simpleRNN(nn.Module):
         return sm
 
 
-# In[29]:
+# In[22]:
 
 
 class simpleLSTM(nn.Module):
-    def __init__(self, pretrained_vec, emb_dim, hidden_dim, change_emb=True, dropout=0):
+    def __init__(self, pretrained_vec, emb_dim, hidden_dim, n_layers=1,
+                 change_emb=True, dropout=0):
         super().__init__()
         self.embedding = nn.Embedding(len(TEXT.vocab), emb_dim)
         self.embedding.weight.data.copy_(pretrained_vec)
         self.embedding.weight.requires_grad = change_emb
         
-        self.lstm = nn.LSTM(emb_dim, hidden_dim, bidirectional=True, dropout=dropout)
+        self.lstm = nn.LSTM(emb_dim, hidden_dim, num_layers=n_layers,
+                            bidirectional=True, dropout=dropout)
         
         self.fc = nn.Linear(2*hidden_dim, n_classes)
+        
+        self.dropout = nn.Dropout(dropout)
         
     def forward(self, seq):
         #pdb.set_trace()
         # seq dims: [seq len, batch size]
+        
         emb = self.embedding(seq)
         # emb dims: [seq len, batch size, emb dim]
+        
         out, (hid, cel) = self.lstm(emb)
+        
         # out dims: [seq len, batch size, hidden_dim]
-        # hid dims: [1, batch size, hidden_dim]
-        # cel dims: [1, batch size, hidden_dim]
+        # hid dims: [2*n_layers, batch size, hidden_dim]
+        # cel dims: [2*n_layers, batch size, hidden_dim]
         # out[-1,:,:hd] -> [batch size, hidden_dim]  (last time step hidden vector)
         # out[0,:,hd:] <- [batch size, hidden_dim]  (first time step hidden vector)
         conc = torch.cat((out[-1,:,:hidden_dim], out[0,:,hidden_dim:]), dim=1)
+        
+        conc = self.dropout(conc)
+        
         out = self.fc(conc)
         # out dims: [batch size, n_classes]
         sm = F.log_softmax(out, dim=-1)
@@ -315,38 +337,51 @@ class simpleLSTM(nn.Module):
         
         return sm
 
-model = CNN(TEXT.vocab.vectors,
-            emb_dim=emb_dim,
-            n_channels_per_filter=100,
-            filter_sizes=[3, 4, 5]
-           ).to(device)
-# In[30]:
+
+# In[23]:
+
+
+#model = CNN(TEXT.vocab.vectors,
+#            emb_dim=emb_dim,
+#            n_channels_per_filter=100,
+#            filter_sizes=[3, 4, 5]
+#           )
+
+
+# In[24]:
 
 
 model = simpleLSTM(TEXT.vocab.vectors,
-                  emb_dim=emb_dim,
-                  hidden_dim=hidden_dim,
-                  change_emb=False,
-                  dropout=0
-                 )
+                   emb_dim=emb_dim,
+                   hidden_dim=hidden_dim,
+                   n_layers=num_linear,
+                   change_emb=True,
+                   dropout=0
+                  )
 if cuda:
     model = model.cuda()
 
-x, y = next(iter(train_dl))
-pred = model(x)
-# In[31]:
+
+# In[25]:
+
+
+#x, y = next(iter(train_dl))
+#pred = model(x)
+
+
+# In[26]:
 
 
 len(vars(trn[0])['statement'])
 
 
-# In[32]:
+# In[27]:
 
 
 loss_func = nn.NLLLoss()
 
 
-# In[33]:
+# In[28]:
 
 
 print(model)
@@ -360,7 +395,7 @@ import tqdm
 opt = optim.Adam(model.parameters(), lr=0.001)
 loss_func = nn.NLLLoss()
  
-epochs = 10
+epochs = 100
 
 missclass = []
 losses = []
@@ -437,4 +472,27 @@ plt.legend(['train', 'valid'])
 
 plt.plot(missclass)
 plt.legend(['train', 'valid'])
+
+
+# In[ ]:
+
+
+import spacy
+nlp = spacy.load('en')
+
+def predict_sentiment(sentence):
+    tokenized = [tok.text for tok in nlp.tokenizer(sentence)]
+    indexed = [TEXT.vocab.stoi[t] for t in tokenized]
+    tensor = torch.LongTensor(indexed)
+    if cuda:
+        tensor = tensor.cuda()
+    tensor = tensor.unsqueeze(1)
+    prediction = model(tensor)
+    return prediction.item()
+
+
+# In[ ]:
+
+
+predict_sentiment("This film is terrible")
 
