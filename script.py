@@ -71,6 +71,7 @@ data_path = './data'
 
 TEXT = data.Field(sequential=True, tokenize='spacy', lower=True)
 LABEL = data.Field(sequential=False, use_vocab=False)
+SENTIMENT = data.Field(sequential=False, use_vocab=False)
 
 
 # In[8]:
@@ -88,21 +89,43 @@ train, test = data.TabularDataset.splits(
     fields=datafields)
 
 
-# In[9]:
+# In[18]:
 
 
-TEXT.build_vocab(train, test, vectors='glove.6B.'+str(settings.emb_dim)+'d')
+train_file_imdb = settings.imdb_file
+train_imdb, valid_imdb = data_import.import_imbd(train_file_imdb, to=10000, test_size=settings.test_size)
+data_import.create_split_files('./imdb', train_imdb, valid_imdb)
+
+datafields = [('tag', None),
+              ('statement', TEXT),
+              ('tag_id', SENTIMENT)]
+
+train_imdb, test_imdb = data.TabularDataset.splits(
+    path='./imdb/data',
+    train='train.csv', validation='valid.csv',
+    format='csv',
+    skip_header=True,
+    fields=datafields)
+
+
+# In[19]:
+
+
+TEXT.build_vocab(train, test, train_imdb, test_imdb, vectors='glove.6B.'+str(settings.emb_dim)+'d')
 LABEL.build_vocab(train, test)
+SENTIMENT.build_vocab(train_imdb, test_imdb)
 
 
-# In[10]:
+# In[20]:
 
 
 n_classes = len(dict(LABEL.vocab.freqs).keys())
 print('Number of classes:', n_classes)
+n_sent = len(dict(SENTIMENT.vocab.freqs).keys())
+print('Number of sentiments:', n_sent)
 
 
-# In[11]:
+# In[21]:
 
 
 print('len(trn):', len(train))
@@ -110,10 +133,11 @@ print('len(test):', len(test))
 print(TEXT.vocab.freqs.most_common(20))
 print(TEXT.vocab.itos[:10])
 #print(vars(train[0]))
-#print(LABEL.vocab.stoi)
+print(LABEL.vocab.stoi)
+print(SENTIMENT.vocab.stoi)
 
 
-# In[12]:
+# In[22]:
 
 
 print(TEXT.vocab.vectors.shape)
@@ -121,7 +145,7 @@ vocab_size = len(TEXT.vocab)
 TEXT.vocab.vectors[TEXT.vocab.stoi['the']]
 
 
-# In[13]:
+# In[23]:
 
 
 #trn, vld = train.split(0.7)
@@ -132,7 +156,7 @@ print('len(vld):', len(vld))
 #print('len(test):', len(test))
 
 
-# In[14]:
+# In[24]:
 
 
 train_iter, val_iter = data.BucketIterator.splits(
@@ -144,7 +168,7 @@ train_iter, val_iter = data.BucketIterator.splits(
 )
 
 
-# In[15]:
+# In[25]:
 
 
 class BatchGenerator:
@@ -165,14 +189,14 @@ class BatchGenerator:
             yield (X, y)
 
 
-# In[16]:
+# In[26]:
 
 
 train_dl = BatchGenerator(train_iter, 'statement', 'tag_id')
 valid_dl = BatchGenerator(val_iter, 'statement', 'tag_id')
 
 
-# In[17]:
+# In[27]:
 
 
 # Requires padding to be set to 100
@@ -200,7 +224,7 @@ class SimpleForward(nn.Module):
         
 
 
-# In[18]:
+# In[28]:
 
 
 class CNN(nn.Module):
@@ -254,7 +278,7 @@ class CNN(nn.Module):
         return F.log_softmax(out, dim=-1)
 
 
-# In[19]:
+# In[29]:
 
 
 class simpleRNN(nn.Module):
@@ -284,17 +308,22 @@ class simpleRNN(nn.Module):
         return sm
 
 
-# In[28]:
+# In[30]:
 
 
 class simpleLSTM(nn.Module):
-    def __init__(self, pretrained_vec, emb_dim, hidden_dim, n_layers=1,
+    def __init__(self, emb_dim, hidden_dim, n_layers=1, pretrained_vec=torch.zeros(0),
                  change_emb=True, dropout=0):
         super().__init__()
         self.hidden_dim = hidden_dim
         
         self.embedding = nn.Embedding(len(TEXT.vocab), emb_dim)
-        self.embedding.weight.data.copy_(pretrained_vec)
+        if len(pretrained_vec) > 0:
+            print('Loaded pretrained vectors.')
+            self.embedding.weight.data.copy_(pretrained_vec)
+        else:
+            print('Not loaded pretrained vectors.')
+        
         self.embedding.weight.requires_grad = change_emb
         
         self.lstm = nn.LSTM(emb_dim, hidden_dim, num_layers=n_layers,
@@ -330,7 +359,7 @@ class simpleLSTM(nn.Module):
         return sm
 
 
-# In[29]:
+# In[31]:
 
 
 #model = CNN(TEXT.vocab.vectors,
@@ -340,13 +369,13 @@ class simpleLSTM(nn.Module):
 #           )
 
 
-# In[30]:
+# In[32]:
 
 
-model = simpleLSTM(TEXT.vocab.vectors,
-                   emb_dim=settings.emb_dim,
+model = simpleLSTM(emb_dim=settings.emb_dim,
                    hidden_dim=settings.hidden_dim,
                    n_layers=settings.num_linear,
+                   pretrained_vec=TEXT.vocab.vectors,
                    change_emb=True,
                    dropout=settings.dropout
                   )
@@ -354,116 +383,126 @@ if cuda:
     model = model.cuda()
 
 
-# In[31]:
+# In[33]:
 
 
 #x, y = next(iter(train_dl))
 #pred = model(x)
 
 
-# In[32]:
+# In[34]:
 
 
 len(vars(trn[0])['statement'])
 
 
-# In[33]:
+# In[35]:
 
 
 loss_func = nn.NLLLoss()
 
 
-# In[34]:
+# In[36]:
 
 
 print(model)
 
 
-# In[ ]:
+# In[46]:
 
 
 import tqdm
+
+def run_epochs(model, train_dl, valid_dl):
+    
+    opt = optim.Adam(model.parameters(), lr=0.001)
+    loss_func = nn.NLLLoss()
+
+    epochs = settings.epochs
+
+    missclass = []
+    losses = []
  
-opt = optim.Adam(model.parameters(), lr=0.001)
-loss_func = nn.NLLLoss()
- 
-epochs = settings.epochs
+    for epoch in range(1, epochs + 1):
+        running_loss = 0.0
+        running_corrects = 0
+        model.train() # turn on training mode
 
-missclass = []
-losses = []
- 
-for epoch in range(1, epochs + 1):
-    running_loss = 0.0
-    running_corrects = 0
-    model.train() # turn on training mode
-    
-    num_vals = 0
-    num_correct = 0
-    
-    #pdb.set_trace()
-    
-    #for x, y in train_dl: 
-    for x, y in tqdm.tqdm(train_dl): 
-        opt.zero_grad()
- 
-        preds = model(x)
-        loss = loss_func(preds, y.long())
+        num_vals = 0
+        num_correct = 0
 
-        loss.backward()
-        opt.step()
+        #pdb.set_trace()
+
+        #for x, y in train_dl: 
+        for x, y in tqdm.tqdm(train_dl): 
+            opt.zero_grad()
+
+            preds = model(x)
+            loss = loss_func(preds, y.long())
+
+            loss.backward()
+            opt.step()
+
+            if cuda:
+                running_loss += loss.data[0] * x.size(0)
+            else:
+                running_loss += loss.item() * x.size(0)
+
+            _, y_pred = torch.max(preds, dim=1)
+            if cuda:
+                num_correct += torch.sum(y == y_pred).data[0]
+            else:
+                num_correct += torch.sum(y == y_pred).item()
+            num_vals += len(y.float())
+
+        #pdb.set_trace()
+
+        missclass_tr = 1 - num_correct / num_vals
+
+        epoch_loss = running_loss / len(trn)
+
+        num_vals = 0
+        num_correct = 0
+
+        # calculate the validation loss for this epoch
+        val_loss = 0.0
+        model.eval() # turn on evaluation mode
+        for x, y in tqdm.tqdm(valid_dl):
+            preds = model(x)
+            loss = loss_func(preds, y.long())
+            if cuda:
+                val_loss += loss.data[0] * x.size(0)
+            else:
+                val_loss += loss.item() * x.size(0)
+
+            _, y_pred = torch.max(preds, dim=1)
+            if cuda:
+                num_correct += torch.sum(y == y_pred).data[0]
+            else:
+                num_correct += torch.sum(y == y_pred).item()
+            num_vals += len(y.float())
+
+        #pdb.set_trace()
+
+        missclass_te = 1 - num_correct / num_vals
+        val_loss /= len(vld)
+
+        missclass.append((missclass_tr, missclass_te))
+        losses.append((epoch_loss, val_loss))
+
+        print('Epoch: {}/{}, Loss: [{:.4f}, {:.4f}], Miss: [{:.2%}, {:.2%}]'              .format(epoch, epochs, epoch_loss, val_loss, missclass_tr, missclass_te))
+        sys.stdout.flush()
         
-        if cuda:
-            running_loss += loss.data[0] * x.size(0)
-        else:
-            running_loss += loss.item() * x.size(0)
-    
-        _, y_pred = torch.max(preds, dim=1)
-        if cuda:
-            num_correct += torch.sum(y == y_pred).data[0]
-        else:
-            num_correct += torch.sum(y == y_pred).item()
-        num_vals += len(y.float())
-        
-    #pdb.set_trace()
-        
-    missclass_tr = 1 - num_correct / num_vals
- 
-    epoch_loss = running_loss / len(trn)
-    
-    num_vals = 0
-    num_correct = 0
-
-    # calculate the validation loss for this epoch
-    val_loss = 0.0
-    model.eval() # turn on evaluation mode
-    for x, y in tqdm.tqdm(valid_dl):
-        preds = model(x)
-        loss = loss_func(preds, y.long())
-        if cuda:
-            val_loss += loss.data[0] * x.size(0)
-        else:
-            val_loss += loss.item() * x.size(0)
-
-        _, y_pred = torch.max(preds, dim=1)
-        if cuda:
-            num_correct += torch.sum(y == y_pred).data[0]
-        else:
-            num_correct += torch.sum(y == y_pred).item()
-        num_vals += len(y.float())
-        
-    #pdb.set_trace()
-        
-    missclass_te = 1 - num_correct / num_vals
-    val_loss /= len(vld)
-    
-    missclass.append((missclass_tr, missclass_te))
-    losses.append((epoch_loss, val_loss))
-    
-    print('Epoch: {}, Loss: [{:.4f}, {:.4f}], Miss: [{:.2%}, {:.2%}]'          .format(epoch, epoch_loss, val_loss, missclass_tr, missclass_te))
-    sys.stdout.flush()
+    return model, opt, losses, missclass
 
 
-# In[32]:
+# In[38]:
+
+
+model, opt, losses, missclass = run_epochs(model, train_dl, valid_dl)
+
+
+# In[39]:
 
 
 if not cuda:
@@ -471,10 +510,52 @@ if not cuda:
     plt.legend(['train', 'valid'])
 
 
-# In[33]:
+# In[40]:
 
 
 if not cuda:
     plt.plot(missclass)
     plt.legend(['train', 'valid'])
+
+
+# In[42]:
+
+
+# Freeze all layers
+for param in model.parameters():
+    param.requires_grad = False
+
+
+# In[43]:
+
+
+# Replace fc with sentiment layer
+# Parameters of newly constructed modules have requires_grad=True by default
+num_ftrs = model.fc.in_features
+model.fc = nn.Linear(num_ftrs, n_sent)
+
+
+# In[44]:
+
+
+train_imdb_iter, val_imdb_iter = data.BucketIterator.splits(
+    datasets=(train_imdb, test_imdb),
+    batch_sizes=(settings.batch_size, settings.batch_size),
+    sort_key=lambda x: len(x.statement),
+    sort_within_batch=False,
+    repeat=False
+)
+
+
+# In[45]:
+
+
+train_imdb_dl = BatchGenerator(train_imdb_iter, 'statement', 'tag_id')
+valid_imdb_dl = BatchGenerator(val_imdb_iter, 'statement', 'tag_id')
+
+
+# In[ ]:
+
+
+model, opt, losses, missclass = run_epochs(model, train_imdb_dl, valid_imdb_dl)
 
