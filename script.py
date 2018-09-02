@@ -436,21 +436,20 @@ for epoch in range(1, epochs + 1):
     # calculate the validation loss for this epoch
     val_loss = 0.0
     model.eval() # turn on evaluation mode
-    with torch.no_grad():
-        for x, y in tqdm.tqdm(valid_dl):
-            preds = model(x)
-            loss = loss_func(preds, y.long())
-            if cuda:
-                val_loss += loss.data[0] * x.size(0)
-            else:
-                val_loss += loss.item() * x.size(0)
+    for x, y in tqdm.tqdm(valid_dl):
+        preds = model(x)
+        loss = loss_func(preds, y.long())
+        if cuda:
+            val_loss += loss.data[0] * x.size(0)
+        else:
+            val_loss += loss.item() * x.size(0)
 
-            _, y_pred = torch.max(preds, dim=1)
-            if cuda:
-                num_correct += torch.sum(y == y_pred).data[0]
-            else:
-                num_correct += torch.sum(y == y_pred).item()
-            num_vals += len(y.float())
+        _, y_pred = torch.max(preds, dim=1)
+        if cuda:
+            num_correct += torch.sum(y == y_pred).data[0]
+        else:
+            num_correct += torch.sum(y == y_pred).item()
+        num_vals += len(y.float())
         
     #pdb.set_trace()
         
