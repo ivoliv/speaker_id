@@ -3,8 +3,12 @@
 emb_dim = 200
 hidden_dim = 300
 num_linear = 3
+dropout=0.5
 
 batch_size = 16
+
+test_size = 0.20
+
 
 # LM settings:
 window_size=201
