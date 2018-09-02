@@ -387,7 +387,7 @@ import tqdm
 opt = optim.Adam(model.parameters(), lr=0.001)
 loss_func = nn.NLLLoss()
  
-epochs = 5
+epochs = settings.epochs
 
 missclass = []
 losses = []
