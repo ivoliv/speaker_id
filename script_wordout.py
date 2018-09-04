@@ -65,9 +65,7 @@ data_import.create_split_files('.', train, valid)
 
 data_path = './data'
 
-TEXT = data.Field(sequential=True, tokenize='spacy', lower=True)
-LABEL = data.Field(sequential=False, use_vocab=False)
-SENTIMENT = data.Field(sequential=False, use_vocab=False)
+
 # In[7]:
 
 
@@ -88,20 +86,7 @@ train, test = data.TabularDataset.splits(
     skip_header=True,
     fields=datafields)
 
-train_file_imdb = settings.imdb_file
-train_imdb, valid_imdb = data_import.import_imbd(train_file_imdb, to=10000, test_size=settings.test_size)
-data_import.create_split_files('./imdb', train_imdb, valid_imdb)
 
-datafields = [('tag', None),
-              ('statement', TEXT),
-              ('tag_id', SENTIMENT)]
-
-train_imdb, test_imdb = data.TabularDataset.splits(
-    path='./imdb/data',
-    train='train.csv', validation='valid.csv',
-    format='csv',
-    skip_header=True,
-    fields=datafields)
 # In[9]:
 
 
@@ -379,8 +364,6 @@ if cuda:
 
 #x, y = next(iter(train_dl))
 #pred = model(x)
-print(pred.shape)
-print(y.shape)
 
 
 # In[24]:
