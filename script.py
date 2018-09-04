@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[1]:
+# In[2]:
 
 
 import utils.data_import as data_import
@@ -13,13 +13,20 @@ import torch.nn.functional as F
 import torch.optim as optim
 
 from torchtext import data, vocab
+import torchtext.data, torchtext.vocab
 
 import os, sys
 import pdb
 import pandas as pd
 
 
-# In[2]:
+# In[3]:
+
+
+torchtext.__version__
+
+
+# In[4]:
 
 
 import settings
@@ -35,7 +42,7 @@ elif settings.ORIG_DATA == 2:
     train, valid = data_import.create_splits(df, test_size=settings.test_size)
 
 
-# In[3]:
+# In[5]:
 
 
 cuda = torch.cuda.is_available()
@@ -48,38 +55,36 @@ else:
     get_ipython().run_line_magic('matplotlib', 'inline')
 
 
-# In[4]:
+# In[6]:
 
 
 valid.head()
 
 
-# In[5]:
+# In[7]:
 
 
 data_import.create_split_files('.', train, valid)
 
 
-# In[6]:
+# In[8]:
 
 
 data_path = './data'
 
 
-# In[7]:
+# In[9]:
 
 
-TEXT = data.Field(sequential=True, tokenize='spacy', lower=True)
-LABEL = data.Field(sequential=False, use_vocab=False)
-SENTIMENT = data.Field(sequential=False, use_vocab=False)
+TEXT = data.Field(sequential=True, lower=True)
 
 
-# In[8]:
+# In[10]:
 
 
-datafields = [('tag', None),
+datafields = [('tag', TEXT),
               ('statement', TEXT),
-              ('tag_id', LABEL)]
+              ('tag_id', None)]
 
 train, test = data.TabularDataset.splits(
     path=data_path,
@@ -89,55 +94,33 @@ train, test = data.TabularDataset.splits(
     fields=datafields)
 
 
-# In[18]:
+# In[11]:
 
 
-train_file_imdb = settings.imdb_file
-train_imdb, valid_imdb = data_import.import_imbd(train_file_imdb, to=10000, test_size=settings.test_size)
-data_import.create_split_files('./imdb', train_imdb, valid_imdb)
-
-datafields = [('tag', None),
-              ('statement', TEXT),
-              ('tag_id', SENTIMENT)]
-
-train_imdb, test_imdb = data.TabularDataset.splits(
-    path='./imdb/data',
-    train='train.csv', validation='valid.csv',
-    format='csv',
-    skip_header=True,
-    fields=datafields)
+TEXT.build_vocab(train, test, vectors='glove.6B.'+str(settings.emb_dim)+'d')
 
 
-# In[19]:
+# In[12]:
 
 
-TEXT.build_vocab(train, test, train_imdb, test_imdb, vectors='glove.6B.'+str(settings.emb_dim)+'d')
-LABEL.build_vocab(train, test)
-SENTIMENT.build_vocab(train_imdb, test_imdb)
+n_vocab = len(TEXT.vocab)
+n_classes = n_vocab
+print('Vocab size:', n_vocab)
 
 
-# In[20]:
-
-
-n_classes = len(dict(LABEL.vocab.freqs).keys())
-print('Number of classes:', n_classes)
-n_sent = len(dict(SENTIMENT.vocab.freqs).keys())
-print('Number of sentiments:', n_sent)
-
-
-# In[21]:
+# In[13]:
 
 
 print('len(trn):', len(train))
 print('len(test):', len(test))
 print(TEXT.vocab.freqs.most_common(20))
 print(TEXT.vocab.itos[:10])
-#print(vars(train[0]))
-print(LABEL.vocab.stoi)
-print(SENTIMENT.vocab.stoi)
+print(vars(train[3]))
+#print(LABEL.vocab.stoi)
+#print(SENTIMENT.vocab.stoi)
 
 
-# In[22]:
+# In[14]:
 
 
 print(TEXT.vocab.vectors.shape)
@@ -145,7 +128,7 @@ vocab_size = len(TEXT.vocab)
 TEXT.vocab.vectors[TEXT.vocab.stoi['the']]
 
 
-# In[23]:
+# In[15]:
 
 
 #trn, vld = train.split(0.7)
@@ -156,7 +139,7 @@ print('len(vld):', len(vld))
 #print('len(test):', len(test))
 
 
-# In[24]:
+# In[16]:
 
 
 train_iter, val_iter = data.BucketIterator.splits(
@@ -168,7 +151,7 @@ train_iter, val_iter = data.BucketIterator.splits(
 )
 
 
-# In[25]:
+# In[17]:
 
 
 class BatchGenerator:
@@ -181,7 +164,7 @@ class BatchGenerator:
     def __iter__(self):
         for batch in self.dl:
             X = getattr(batch, self.x_field)
-            y = getattr(batch, self.y_fields)
+            y = getattr(batch, self.y_fields).squeeze(0)
             #y = torch.cat([getattr(batch, feat).unsqueeze(1) 
             #               for feat in self.y_fields], dim=1).float()
             if cuda:
@@ -189,14 +172,14 @@ class BatchGenerator:
             yield (X, y)
 
 
-# In[26]:
+# In[18]:
 
 
-train_dl = BatchGenerator(train_iter, 'statement', 'tag_id')
-valid_dl = BatchGenerator(val_iter, 'statement', 'tag_id')
+train_dl = BatchGenerator(train_iter, 'statement', 'tag')
+valid_dl = BatchGenerator(val_iter, 'statement', 'tag')
 
 
-# In[27]:
+# In[19]:
 
 
 # Requires padding to be set to 100
@@ -224,7 +207,7 @@ class SimpleForward(nn.Module):
         
 
 
-# In[28]:
+# In[20]:
 
 
 class CNN(nn.Module):
@@ -278,7 +261,7 @@ class CNN(nn.Module):
         return F.log_softmax(out, dim=-1)
 
 
-# In[29]:
+# In[21]:
 
 
 class simpleRNN(nn.Module):
@@ -308,7 +291,7 @@ class simpleRNN(nn.Module):
         return sm
 
 
-# In[30]:
+# In[22]:
 
 
 class simpleLSTM(nn.Module):
@@ -359,7 +342,7 @@ class simpleLSTM(nn.Module):
         return sm
 
 
-# In[31]:
+# In[23]:
 
 
 #model = CNN(TEXT.vocab.vectors,
@@ -369,7 +352,7 @@ class simpleLSTM(nn.Module):
 #           )
 
 
-# In[32]:
+# In[24]:
 
 
 model = simpleLSTM(emb_dim=settings.emb_dim,
@@ -383,32 +366,35 @@ if cuda:
     model = model.cuda()
 
 
-# In[33]:
+# In[25]:
 
 
-#x, y = next(iter(train_dl))
-#pred = model(x)
+x, y = next(iter(train_dl))
+pred = model(x)
+print(x.shape)
+print(y.shape)
+print(pred.shape)
 
 
-# In[34]:
+# In[26]:
 
 
 len(vars(trn[0])['statement'])
 
 
-# In[35]:
+# In[27]:
 
 
 loss_func = nn.NLLLoss()
 
 
-# In[36]:
+# In[28]:
 
 
 print(model)
 
 
-# In[46]:
+# In[29]:
 
 
 import tqdm
@@ -443,16 +429,10 @@ def run_epochs(model, train_dl, valid_dl):
             loss.backward()
             opt.step()
 
-            if cuda:
-                running_loss += loss.data[0] * x.size(0)
-            else:
-                running_loss += loss.item() * x.size(0)
+            running_loss += loss.item() * x.size(0)
 
             _, y_pred = torch.max(preds, dim=1)
-            if cuda:
-                num_correct += torch.sum(y == y_pred).data[0]
-            else:
-                num_correct += torch.sum(y == y_pred).item()
+            num_correct += torch.sum(y == y_pred).item()
             num_vals += len(y.float())
 
         #pdb.set_trace()
@@ -470,16 +450,10 @@ def run_epochs(model, train_dl, valid_dl):
         for x, y in tqdm.tqdm(valid_dl):
             preds = model(x)
             loss = loss_func(preds, y.long())
-            if cuda:
-                val_loss += loss.data[0] * x.size(0)
-            else:
-                val_loss += loss.item() * x.size(0)
+            val_loss += loss.item() * x.size(0)
 
             _, y_pred = torch.max(preds, dim=1)
-            if cuda:
-                num_correct += torch.sum(y == y_pred).data[0]
-            else:
-                num_correct += torch.sum(y == y_pred).item()
+            num_correct += torch.sum(y == y_pred).item()
             num_vals += len(y.float())
 
         #pdb.set_trace()
@@ -496,7 +470,7 @@ def run_epochs(model, train_dl, valid_dl):
     return model, opt, losses, missclass
 
 
-# In[38]:
+# In[ ]:
 
 
 model, opt, losses, missclass = run_epochs(model, train_dl, valid_dl)
@@ -533,9 +507,17 @@ for param in model.parameters():
 # Parameters of newly constructed modules have requires_grad=True by default
 num_ftrs = model.fc.in_features
 model.fc = nn.Linear(num_ftrs, n_sent)
+if cuda:
+    model = model.cuda()
 
 
-# In[44]:
+# In[48]:
+
+
+print(model)
+
+
+# In[49]:
 
 
 train_imdb_iter, val_imdb_iter = data.BucketIterator.splits(
@@ -547,14 +529,14 @@ train_imdb_iter, val_imdb_iter = data.BucketIterator.splits(
 )
 
 
-# In[45]:
+# In[50]:
 
 
 train_imdb_dl = BatchGenerator(train_imdb_iter, 'statement', 'tag_id')
 valid_imdb_dl = BatchGenerator(val_imdb_iter, 'statement', 'tag_id')
 
 
-# In[ ]:
+# In[51]:
 
 
 model, opt, losses, missclass = run_epochs(model, train_imdb_dl, valid_imdb_dl)

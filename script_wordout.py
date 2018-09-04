@@ -44,8 +44,6 @@ if cuda:
     print('Device:', torch.cuda.get_device_name(torch.cuda.current_device()))
 else:
     print('No cuda.')
-    import matplotlib.pyplot as plt
-    get_ipython().run_line_magic('matplotlib', 'inline')
 
 
 # In[4]:
