@@ -26,7 +26,7 @@ def create_splits(df, test_size=0.10):
     df['tag_id'] = df['tag'].apply(lambda x: c_map[x])
 
     train, valid = train_test_split(df, test_size=test_size,
-                                    random_state=123, shuffle=True)
+                                    random_state=123, shuffle=False)
 
     return train, valid
 
@@ -65,7 +65,10 @@ def create_split_files(data_path, train, valid):
     return 
 
 
-def import_wikitext(window_size=70, lines=100, prob_cut=0.05, cut_factor=0.50):
+def import_wikitext(batch_size, window_size=70, lines=100, prob_cut=0.05, cut_factor=0.50):
+    """
+    `batch_size` is used to create equal-length batches to eliminate padding
+    """
     
     WINDOW_SIZE = window_size
     LINES = lines
@@ -87,30 +90,41 @@ def import_wikitext(window_size=70, lines=100, prob_cut=0.05, cut_factor=0.50):
     ret_text_len = 0
     start = 0
     lines_so_far = 0
-    while True:
-        if start > last_start:
-            break
-        if LINES > 0 and lines_so_far >= LINES:
-            break
-            
-        seq = ''
-        pred = ''
+    done = False
+    
+    while not done:
         
         factor = np.random.choice([1, cut_factor], p=[1-prob_cut, prob_cut])
         WINDOW_SIZE = int(window_size * factor)
         WINDOW_SIZE = max(5, int(np.random.normal(WINDOW_SIZE, 5)))
         
-        for w in text[start:start+WINDOW_SIZE]:
-            seq += w + ' '
-        seq = seq.strip()
-        for w in text[start+1:start+WINDOW_SIZE+1]:
-            pred += w + ' '
-        pred = pred.strip()
-        seq_list.append(seq)
-        pred_list.append(pred)
-        ret_text_len += len(seq) + len(pred)
-        lines_so_far += 1
-        start += WINDOW_SIZE + 1
+        for _ in range(batch_size):
+            
+            seq = ''
+            pred = ''
+        
+            for w in text[start:start+WINDOW_SIZE]:
+                seq += w + ' '
+            seq = seq.strip()
+            
+            for w in text[start+1:start+WINDOW_SIZE+1]:
+                pred += w + ' '
+            pred = pred.strip()
+            
+            seq_list.append(seq)
+            pred_list.append(pred)
+            
+            ret_text_len += len(seq) + len(pred)
+            lines_so_far += 1
+            start += WINDOW_SIZE + 1
+            
+            if start > last_start:
+                done = True
+            if LINES > 0 and lines_so_far >= LINES:
+                done = True
+                
+            if done:
+                break
             
     df = pd.DataFrame({'tag': pred_list, 'statement': seq_list})
     
