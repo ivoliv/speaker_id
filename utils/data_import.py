@@ -2,6 +2,7 @@ import os
 import pandas as pd
 from sklearn.model_selection import train_test_split
 import urllib3
+import numpy as np
 
 def read_from_file(data_path, train_file):
 
@@ -64,41 +65,55 @@ def create_split_files(data_path, train, valid):
     return 
 
 
-def import_wikitext(window_size=301, lines=100):
+def import_wikitext(window_size=70, lines=100, prob_cut=0.05, cut_factor=0.50):
     
     WINDOW_SIZE = window_size
     LINES = lines
     
-    if (WINDOW_SIZE%2 != 1):
-        raise ValueError('WINDOW_SIZE must be odd!')
-    
     urllib3.disable_warnings()
     http = urllib3.PoolManager()
-    url_add = 'https://raw.githubusercontent.com/pytorch/examples/master/word_language_model/data/wikitext-2/valid.txt'
+    url_add = 'https://raw.githubusercontent.com/pytorch/examples/master/word_language_model/data/wikitext-2/train.txt'
     text = http.request('GET', url_add)
     
     text = text.data.decode('utf-8').split()
     
     text_len = len(text)
     first_start = 0
-    last_start = text_len - WINDOW_SIZE
-    print('text length:', text_len)
+    last_start = text_len - WINDOW_SIZE - 1
+    print('Original text length:  {:,} token sequence.'.format(text_len))
     
     seq_list = []
     pred_list = []
-    for start in range(first_start, last_start):
-        seq = ''
-        for w in text[start:start+WINDOW_SIZE//2]:
-            seq += w + ' '
-        for w in text[start+WINDOW_SIZE//2+1:start+WINDOW_SIZE]:
-            seq += w + ' '
-        seq = seq.strip()
-        pred = text[(start+WINDOW_SIZE//2)]
-        seq_list.append(seq)
-        pred_list.append(pred)
-        if LINES > 0 and start >= LINES-1:
+    ret_text_len = 0
+    start = 0
+    lines_so_far = 0
+    while True:
+        if start > last_start:
+            break
+        if LINES > 0 and lines_so_far >= LINES:
             break
             
+        seq = ''
+        pred = ''
+        
+        factor = np.random.choice([1, cut_factor], p=[1-prob_cut, prob_cut])
+        WINDOW_SIZE = int(window_size * factor)
+        WINDOW_SIZE = max(5, int(np.random.normal(WINDOW_SIZE, 5)))
+        
+        for w in text[start:start+WINDOW_SIZE]:
+            seq += w + ' '
+        seq = seq.strip()
+        for w in text[start+1:start+WINDOW_SIZE+1]:
+            pred += w + ' '
+        pred = pred.strip()
+        seq_list.append(seq)
+        pred_list.append(pred)
+        ret_text_len += len(seq) + len(pred)
+        lines_so_far += 1
+        start += WINDOW_SIZE + 1
+            
     df = pd.DataFrame({'tag': pred_list, 'statement': seq_list})
+    
+    print('Generated text length: {:,} tokens.'.format(ret_text_len))
     
     return df

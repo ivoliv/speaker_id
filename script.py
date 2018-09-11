@@ -97,15 +97,13 @@ train, test = data.TabularDataset.splits(
 # In[11]:
 
 
-TEXT.build_vocab(train, test, vectors='glove.6B.'+str(settings.emb_dim)+'d')
-
+TEXT.build_vocab(train, test)
+n_vocab = len(TEXT.vocab)
+n_classes = n_vocab
 
 # In[12]:
 
 
-n_vocab = len(TEXT.vocab)
-n_classes = n_vocab
-print('Vocab size:', n_vocab)
 
 
 # In[13]:
@@ -123,9 +121,6 @@ print(vars(train[3]))
 # In[14]:
 
 
-print(TEXT.vocab.vectors.shape)
-vocab_size = len(TEXT.vocab)
-TEXT.vocab.vectors[TEXT.vocab.stoi['the']]
 
 
 # In[15]:
@@ -169,6 +164,7 @@ class BatchGenerator:
             #               for feat in self.y_fields], dim=1).float()
             if cuda:
                 X = X.cuda()
+                y = y.cuda()
             yield (X, y)
 
 
@@ -301,11 +297,6 @@ class simpleLSTM(nn.Module):
         self.hidden_dim = hidden_dim
         
         self.embedding = nn.Embedding(len(TEXT.vocab), emb_dim)
-        if len(pretrained_vec) > 0:
-            print('Loaded pretrained vectors.')
-            self.embedding.weight.data.copy_(pretrained_vec)
-        else:
-            print('Not loaded pretrained vectors.')
         
         self.embedding.weight.requires_grad = change_emb
         
@@ -478,6 +469,8 @@ model, opt, losses, missclass = run_epochs(model, train_dl, valid_dl)
 
 # In[39]:
 
+print(losses)
+print(missclass)
 
 if not cuda:
     plt.plot(losses)
@@ -502,7 +495,7 @@ for param in model.parameters():
 
 # In[43]:
 
-
+exit()
 # Replace fc with sentiment layer
 # Parameters of newly constructed modules have requires_grad=True by default
 num_ftrs = model.fc.in_features
