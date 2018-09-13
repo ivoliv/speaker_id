@@ -65,7 +65,8 @@ def create_split_files(data_path, train, valid):
     return 
 
 
-def import_wikitext(batch_size, window_size=70, lines=100, prob_cut=0.05, cut_factor=0.50):
+def import_wikitext(batch_size, window_size=70, lines=100, prob_cut=0.05, cut_factor=0.50,
+                    corpus='wikitext-2'):
     """
     `batch_size` is used to create equal-length batches to eliminate padding
     """
@@ -73,17 +74,32 @@ def import_wikitext(batch_size, window_size=70, lines=100, prob_cut=0.05, cut_fa
     WINDOW_SIZE = window_size
     LINES = lines
     
-    urllib3.disable_warnings()
-    http = urllib3.PoolManager()
-    url_add = 'https://raw.githubusercontent.com/pytorch/examples/master/word_language_model/data/wikitext-2/train.txt'
-    text = http.request('GET', url_add)
+    if corpus == 'wikitext-103':
+
+        with open(os.path.join('./wikitext-103', 'wiki.train.tokens'), encoding='utf8') as f:
+            train_doc = f.readlines()
+
+        text = ''
+        for l in train_doc:
+            text += l.strip()
+        
+    else:
     
-    text = text.data.decode('utf-8').split()
+        urllib3.disable_warnings()
+        http = urllib3.PoolManager()
+        url_add = 'https://raw.githubusercontent.com/pytorch/examples/master/word_language_model/data/wikitext-2/train.txt'
+        text = http.request('GET', url_add)
+
+        text = text.data.decode('utf-8')
+        
+    text = text.split()
     
     text_len = len(text)
+    
+    print('Original text length:  {:,} token sequence.'.format(text_len))
+    
     first_start = 0
     last_start = text_len - WINDOW_SIZE - 1
-    print('Original text length:  {:,} token sequence.'.format(text_len))
     
     seq_list = []
     pred_list = []
