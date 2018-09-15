@@ -1,149 +1,187 @@
 import os
-import pandas as pd
-from sklearn.model_selection import train_test_split
-import urllib3
+import torch
 import numpy as np
+import pandas as pd
+from torch.utils.data import Dataset
+import pdb
 
-def read_from_file(data_path, train_file):
+class ITokList():
 
-    with open(os.path.join(data_path, train_file), encoding='utf8') as f:
-        train_doc = f.readlines()
+    def __init__(self, ilist):
 
-    train = []
-    for l in train_doc:
-        str_list = l.split()
-        tag = str_list[0].strip()
-        text = l.replace(tag, '').strip()
-        train.append((tag, text))
+        self.itoklist = ilist
+        self.batch_matrix = None  # Need to call batchify
+        self.batch_start_end = None  # Need to call batchify
 
-    return train
+    def __len__(self):
 
+        return len(self.itoklist)
 
-def create_splits(df, test_size=0.10):
+    def show_itoklist(self, start=0, to=0):
 
-    classes = df['tag'].unique()
-    c_map = {j: i for i, j in enumerate(classes)}
-    df['tag_id'] = df['tag'].apply(lambda x: c_map[x])
+        if to == 0:
+            to = start + 200  # Default print 200 items
 
-    train, valid = train_test_split(df, test_size=test_size,
-                                    random_state=123, shuffle=False)
-
-    return train, valid
-
-
-def normalize_and_split(data_path, train_file, test_size=0.10):
-
-    input_data = read_from_file(data_path, train_file)
-    df = pd.DataFrame(input_data, columns=['tag', 'statement'])
-    train, valid = create_splits(df, test_size)
-
-    return train, valid
-
-
-def import_imbd(train_file, to=None, test_size=0.10):
-
-    df = pd.read_csv(train_file)
-    if to:
-        df = df[:to]
-    df['tag'] = df['sentiment']
-    df['statement'] = df['review']
-    df = df.drop(['review', 'sentiment'], axis=1)
-
-    train, valid = create_splits(df, test_size=test_size)
-
-    return train, valid
-
-
-def create_split_files(data_path, train, valid):
-
-    print('Writing files to', os.path.join(data_path, 'data'))
-    train.to_csv(os.path.join(data_path, 'data', 'train.csv'), index=False)
-    valid.to_csv(os.path.join(data_path, 'data', 'valid.csv'), index=False)
-    print('Train and validation files written to disk.')
-    print('Sizes:', train.shape, valid.shape)
-    
-    return 
-
-
-def import_wikitext(batch_size, window_size=70, lines=100, prob_cut=0.05, cut_factor=0.50,
-                    corpus='wikitext-2'):
-    """
-    `batch_size` is used to create equal-length batches to eliminate padding
-    """
-    
-    WINDOW_SIZE = window_size
-    LINES = lines
-    
-    if corpus == 'wikitext-103':
-
-        with open(os.path.join('./wikitext-103', 'wiki.train.tokens'), encoding='utf8') as f:
-            train_doc = f.readlines()
-
-        text = ''
-        for l in train_doc:
-            text += l.strip()
-        
-    else:
-    
-        urllib3.disable_warnings()
-        http = urllib3.PoolManager()
-        url_add = 'https://raw.githubusercontent.com/pytorch/examples/master/word_language_model/data/wikitext-2/train.txt'
-        text = http.request('GET', url_add)
-
-        text = text.data.decode('utf-8')
-        
-    text = text.split()
-    
-    text_len = len(text)
-    
-    print('Original text length:  {:,} token sequence.'.format(text_len))
-    
-    first_start = 0
-    last_start = text_len - WINDOW_SIZE - 1
-    
-    seq_list = []
-    pred_list = []
-    ret_text_len = 0
-    start = 0
-    lines_so_far = 0
-    done = False
-    
-    while not done:
-        
-        factor = np.random.choice([1, cut_factor], p=[1-prob_cut, prob_cut])
-        WINDOW_SIZE = int(window_size * factor)
-        WINDOW_SIZE = max(5, int(np.random.normal(WINDOW_SIZE, 5)))
-        
-        for _ in range(batch_size):
-            
-            seq = ''
-            pred = ''
-        
-            for w in text[start:start+WINDOW_SIZE]:
-                seq += w + ' '
-            seq = seq.strip()
-            
-            for w in text[start+1:start+WINDOW_SIZE+1]:
-                pred += w + ' '
-            pred = pred.strip()
-            
-            seq_list.append(seq)
-            pred_list.append(pred)
-            
-            ret_text_len += len(seq) + len(pred)
-            lines_so_far += 1
-            start += WINDOW_SIZE + 1
-            
-            if start > last_start:
-                done = True
-            if LINES > 0 and lines_so_far >= LINES:
-                done = True
-                
-            if done:
+        for i, itok in enumerate(self.itoklist[start:to]):
+            print(itok, end=' ')
+            if i >= to:
                 break
-            
-    df = pd.DataFrame({'tag': pred_list, 'statement': seq_list})
-    
-    print('Generated text length: {:,} tokens.'.format(ret_text_len))
-    
-    return df
+
+    def show_stoklist(self, vocab, start=0, to=0):
+
+        if to == 0:
+            to = start + 200  # Default print 200 items
+
+        for i, itok in enumerate(self.itoklist[start:to]):
+            print(vocab.itos[itok], end=' ')
+            if i >= to:
+                break
+
+    def batchify(self, batch_size, seq_length=70, prob_cut=0.05, cut_factor=0.50):
+
+        nrows = len(self.itoklist) // batch_size
+        self.batch_matrix = torch.tensor(self.itoklist[:nrows*batch_size]).view(batch_size, nrows).t_()
+
+        end = 0
+        self.batch_start_end = []
+
+        while end + 1 < nrows:
+
+            start = end
+
+            factor = np.random.choice([1, cut_factor], p=[1-prob_cut, prob_cut])
+            seq_len = int(seq_length * factor)
+            seq_len = max(5, int(np.random.normal(seq_len, 5)))
+
+            end = min(nrows, start + seq_len)
+
+            self.batch_start_end.append((start, end))
+
+        return
+
+    def batch_stats(self):
+
+        df = pd.DataFrame(self.batch_start_end)
+        df['len'] = df[1] - df[0]
+        print(df['len'].describe())
+
+        return df['len']
+
+class Vocab():
+
+    def __init__(self):
+
+        self.stoi = {}
+        self.itos = []
+        self.freq = {}
+
+    def __len__(self):
+        return len(self.itos)
+
+    def add_token(self, token):
+
+        if token not in self.stoi.keys():
+            self.stoi[token] = len(self.stoi)
+            self.itos.append(token)
+            self.freq[token] = 1
+        else:
+            self.freq[token] += 1
+
+        return self.stoi[token]
+
+    def most_frequent(self):
+
+        return sorted(self.freq.items(), key=lambda kv: kv[1], reverse=True)
+
+    def most_frequent(self, to=20):
+
+        sort_list = sorted(self.freq.items(), key=lambda kv: kv[1], reverse=True)
+
+        if to == 0 or to > len(sort_list):
+            to = len(sort_list)
+
+        return sort_list[:to]
+
+    def least_frequent(self, to=20):
+
+        sort_list = sorted(self.freq.items(), key=lambda kv: kv[1], reverse=False)
+
+        if to == 0 or to > len(sort_list):
+            to = len(sort_list)
+
+        return sort_list[:to]
+
+
+class Corpus():
+    def __init__(self, file_path='./wikitext-2', lines=100):
+        self.vocab = Vocab()
+        self.train = ITokList(self.tokenize(file_path, 'wiki.train.tokens', lines))
+        print('Generated train: {:,} tokens'.format(len(self.train)))
+        self.valid = ITokList(self.tokenize(file_path, 'wiki.valid.tokens', lines))
+        print('Generated valid: {:,} tokens'.format(len(self.valid)))
+        self.test = ITokList(self.tokenize(file_path, 'wiki.test.tokens', lines))
+        print('Generated test:  {:,} tokens'.format(len(self.test)))
+        print('Generated vocab: {:,}'.format(len(self.vocab)))
+        print('Generated oov:   {:.1%}'.format(self.vocab.freq['<unk>']/
+                                               (len(self.train)+len(self.valid)+len(self.test))))
+
+    def tokenize(self, file_path, filename, lines):
+
+        with open(os.path.join(file_path, filename), encoding='utf8') as f:
+
+            doc = f.readlines()
+
+            text = ''
+
+            for line in doc:
+                text += line.replace('=', '').strip() + ' <eol> '
+
+            ilist = []
+
+            self.vocab.add_token('<pad>')
+            self.vocab.add_token('<eol>')
+            self.vocab.add_token('<unk>')
+            self.vocab.add_token('<upcase>')
+
+            for char in text.split():
+                lchar = char.lower()
+                if char != lchar:
+                    ilist.append(self.vocab.add_token('<upcase>'))
+                ilist.append(self.vocab.add_token(lchar))
+
+        return ilist
+
+    def batchify(self, batch_size, seq_length=70, prob_cut=0.05, cut_factor=0.50):
+
+        print('Batchifying train...', end=' ', flush=True)
+        self.train.batchify(batch_size, seq_length, prob_cut, cut_factor)
+        print('Done. ', self.train.batch_matrix.shape, flush=True)
+        print('Batchifying valid...', end=' ', flush=True)
+        self.valid.batchify(batch_size, seq_length, prob_cut, cut_factor)
+        print('Done. ', self.valid.batch_matrix.shape, flush=True)
+        print('Batchifying test... ', end=' ', flush=True)
+        self.test.batchify(batch_size, seq_length, prob_cut, cut_factor)
+        print('Done. ', self.test.batch_matrix.shape, flush=True)
+
+        return
+
+
+class WikiTextDataset(Dataset):
+
+    def __init__(self, itoklist):
+
+        self.itoklist = itoklist
+
+    def __len__(self):
+        return len(self.itoklist.batch_start_end)
+
+    def __getitem__(self, idx):
+        #pdb.set_trace()
+
+        start = self.itoklist.batch_start_end[idx][0]
+        end = self.itoklist.batch_start_end[idx][1]
+
+        x = self.itoklist.batch_matrix[start:end, :]
+        y = self.itoklist.batch_matrix[start+1:end+1, :]
+
+        return x, y.contiguous()
