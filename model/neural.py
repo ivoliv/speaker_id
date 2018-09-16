@@ -2,19 +2,19 @@ import torch.nn as nn
 import pdb
 
 class lang_model_LSTM(nn.Module):
-    def __init__(self, emb_dim, hidden_dim, n_layers=1,
+    def __init__(self, vocab_dim, emb_dim, hidden_dim, n_layers=1,
                  dropout=0, bidirectional=True):
         super().__init__()
 
         self.hidden_dim = hidden_dim
         self.ndir = (2 if bidirectional == True else 1)
 
-        self.embedding = nn.Embedding(len(corpus.vocab), emb_dim)
+        self.embedding = nn.Embedding(vocab_dim, emb_dim)
 
         self.lstm = nn.LSTM(emb_dim, hidden_dim, num_layers=n_layers,
                             bidirectional=bidirectional, dropout=dropout)
 
-        self.fc = nn.Linear(self.ndir * hidden_dim, len(corpus.vocab))
+        self.fc = nn.Linear(self.ndir * hidden_dim, vocab_dim)
 
         self.dropout = nn.Dropout(dropout)
 
