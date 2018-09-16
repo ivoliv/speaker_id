@@ -53,7 +53,7 @@ class ITokList():
             seq_len = int(seq_length * factor)
             seq_len = max(5, int(np.random.normal(seq_len, 5)))
 
-            end = min(nrows, start + seq_len)
+            end = min(nrows-1, start + seq_len)
 
             self.batch_start_end.append((start, end))
 
@@ -115,25 +115,35 @@ class Vocab():
 class Corpus():
     def __init__(self, file_path='./wikitext-2', lines=100):
         self.vocab = Vocab()
-        self.train = ITokList(self.tokenize(file_path, 'wiki.train.tokens', lines))
-        print('Generated train: {:,} tokens'.format(len(self.train)))
-        self.valid = ITokList(self.tokenize(file_path, 'wiki.valid.tokens', lines))
-        print('Generated valid: {:,} tokens'.format(len(self.valid)))
-        self.test = ITokList(self.tokenize(file_path, 'wiki.test.tokens', lines))
-        print('Generated test:  {:,} tokens'.format(len(self.test)))
+        
+        tok, l = self.tokenize(file_path, 'wiki.train.tokens', lines)
+        self.train = ITokList(tok)
+        print('Generated train: {:,} tokens ({:,} lines)'.format(len(self.train), l), flush=True)
+        
+        tok, l = self.tokenize(file_path, 'wiki.valid.tokens', lines)
+        self.valid = ITokList(tok)
+        print('Generated valid: {:,} tokens ({:,} lines)'.format(len(self.valid), l), flush=True)
+        
+        tok, l = self.tokenize(file_path, 'wiki.test.tokens', lines)
+        self.test = ITokList(tok)
+        print('Generated test:  {:,} tokens ({:,} lines)'.format(len(self.test), l), flush=True)
+        
         print('Generated vocab: {:,}'.format(len(self.vocab)))
         print('Generated oov:   {:.1%}'.format(self.vocab.freq['<unk>']/
-                                               (len(self.train)+len(self.valid)+len(self.test))))
+                                               (len(self.train)+len(self.valid)+len(self.test))), flush=True)
 
     def tokenize(self, file_path, filename, lines):
 
         with open(os.path.join(file_path, filename), encoding='utf8') as f:
 
-            doc = f.readlines()
+            if lines == 0:
+                doc = f.readlines()
+            else:
+                doc = [next(f) for x in range(lines+1)]
 
             text = ''
 
-            for line in doc:
+            for l, line in enumerate(doc):
                 text += line.replace('=', '').strip() + ' <eol> '
 
             ilist = []
@@ -149,7 +159,7 @@ class Corpus():
                     ilist.append(self.vocab.add_token('<upcase>'))
                 ilist.append(self.vocab.add_token(lchar))
 
-        return ilist
+        return ilist, l
 
     def batchify(self, batch_size, seq_length=70, prob_cut=0.05, cut_factor=0.50):
 
