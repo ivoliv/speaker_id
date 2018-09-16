@@ -1,6 +1,12 @@
 import numpy as np
 import pandas as pd
 
+def in_ipynb():
+    try:
+        cfg = get_ipython().config 
+        return True
+    except NameError:
+        return False
 
 def show_sample(clf, count_vect, tfidf_transformer, dataset, to=10):
     sample = list(dataset['statement'])[:to]
