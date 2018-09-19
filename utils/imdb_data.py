@@ -43,15 +43,13 @@ class ITokListFrame():
                 break
         return
 
-    def batchify(self, vocab, batch_size, seq_length=70):
+    def batchify(self, vocab, batch_size, seq_length=70, suppress_print=False):
 
         seq_len = seq_length
 
         nbatches = len(self.itoklist_df) // batch_size
-        print(' Number of batches:', nbatches)
+        
         batch_df = self.itoklist_df[:nbatches * batch_size]
-
-        print(' Preserved reviews:', batch_df.shape[0])
         list_of_reviews = []
 
         for idx, row in batch_df.iterrows():
@@ -64,13 +62,17 @@ class ITokListFrame():
             list_of_reviews.append(row_array)
 
         self.batch_matrix = torch.tensor(list_of_reviews).view(batch_size, -1).t_()
-        print(' Matrix size:      ', self.batch_matrix.size())
-
+        
         end = 0
         self.batch_start_end = []
         for start in range(0, self.batch_matrix.size()[0], seq_len+1):
             end = start + seq_len+1
             self.batch_start_end.append([start, end])
+
+        if not suppress_print:
+            print(' Number of batches: {:,}'.format(nbatches))
+            print(' Preserved reviews: {:,}'.format(batch_df.shape[0]))
+            print(' Matrix size:      ', self.batch_matrix.size())
 
         return
 
@@ -147,18 +149,19 @@ class ImdbCorpus():
 
         return pd.DataFrame(tuplelist, columns=['sentiment', 'review']), len(tuplelist)
 
-    def batchify(self, batch_size, seq_length=70):
+    def batchify(self, batch_size, seq_length=70, suppress_print=False):
 
-
-        print('Batch size:       ', batch_size)
-        print('Sequence length:  ', seq_length)
-
-        print('Batchifying train...')
-        self.train.batchify(self.vocab, batch_size, seq_length)
-        print('Batchifying valid...')
-        self.valid.batchify(self.vocab, batch_size, seq_length)
-        print('Batchifying test... ')
-        self.test.batchify(self.vocab, batch_size, seq_length)
+        if not suppress_print:
+            print('Batch size:       ', batch_size)
+            print('Sequence length:  ', seq_length)
+            print('Batchifying train...')
+        self.train.batchify(self.vocab, batch_size, seq_length, suppress_print)
+        if not suppress_print:
+            print('Batchifying valid...')
+        self.valid.batchify(self.vocab, batch_size, seq_length, suppress_print)
+        if not suppress_print:
+            print('Batchifying test... ')
+        self.test.batchify(self.vocab, batch_size, seq_length, suppress_print)
 
         return
 
