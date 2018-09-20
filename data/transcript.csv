@@ -1,0 +1,872 @@
+,tag,text
+0,Doctor,How long has your back pain been going on for?
+1,Patient,My pain started some time around September or October.
+2,Patient,My pain started like 3 weeks ago. 
+3,Patient,My back pain started back in 1993 after I got injured in the military. I was thrown from a Humvee and broke a couple of bones and my back’s been hurting since then.  
+4,Doctor,Has it been getting worse or better?
+5,Patient,The pain has been getting worse since it started.
+6,Patient,Its been about the same or maybe a little better.
+7,Patient,My pain has been getting worse for a long time now. 
+8,Doctor,Where is the pain?
+9,Patient,The pain is all in my lower back area. 
+10,Patient,I have some pain in my lower back but then some shooting pains in both of my legs. 
+11,Patient,The pain is all in the middle of my back and my hips.
+12,Doctor,"Do you have shooting pain in your legs? If so, where exactly does it go?"
+13,Patient,No I don’t have any pain in my legs. 
+14,Patient,Ya it goes down the back of my legs and into the bottom of my feet. 
+15,Patient,No I don’t really have any shooting pain in my legs but I feel cramping in my hips. 
+16,Doctor,"Do you have any numbness or tingling in your legs? If so, where exactly?"
+17,Patient,I feel like I have some numbness sometimes in my legs around my calves.
+18,Patient,Ya I have some numbness and tingling in the bottom of my feet. 
+19,Patient,No I don’t have much numbness or tingling in my legs. 
+20,Doctor,"Do you have any weakness in your legs? If so, where exactly?"
+21,Patient,Ya both of my legs have been feeling weak. 
+22,Patient,No I don’t feel any weakness. 
+23,Patient,Both of my legs feel weak. Its been harder to walk. 
+24,Doctor,"Are you able to walk independently? If not, when last were you able to do so?"
+25,Patient,I can walk by myself but its been harder to walk in general.
+26,Patient,Yes I can walk by myself.
+27,Patient,No I use a cane now to help me walk. 
+28,Doctor,What makes the pain worse?
+29,Patient,"Bending over makes it worse, and sitting for a long time."
+30,Patient,Sitting kind of makes my pain worse. 
+31,Patient,Any thing I do makes the pain worse. It just hurts all the time. 
+32,Doctor,Does it hurt more when you bend over?
+33,Patient,Yes
+34,Patient,A little bit. 
+35,Patient,No not really. 
+36,Doctor,What makes the pain better (non-medication)?
+37,Patient,Laying down makes the pain a little better but I still have pain all of the time.
+38,Patient,Nothing really makes the pain better. 
+39,Patient,Ive been to physical therapy and Ive had those injections. They helped at first but don’t anymore.
+40,Doctor,"What medications have you tried for your pain and if anything, what helps?"
+41,Patient,Ive tried Tylenol and oxycodone but they don’t help much and the pain always comes back.
+42,Patient,Ive tried some Tylenol which helps a little bit. 
+43,Patient,Ive been taking oxycodone and Vicodin but they don’t help much anymore. 
+44,Doctor,"Have you been to a physical therapist? If so, did it help?"
+45,Patient,No I haven’t been to a physical therapist.
+46,Patient,No I haven’t. 
+47,Patient,Ya ive been to a physical therapist. It did help in the beginning but it hasn’t been helping anymore. 
+48,Doctor,Have you had any falls in the past few months that made your back pain worse?
+49,Patient,No not that I remember. 
+50,Patient,No. 
+51,Patient,Ive lost my balance a couple of times and fell but my back felt the same. 
+52,Patient,I can tell you the first few days were not good.
+53,Doctor,Yeah.
+54,Patient,"But that's, uh, understandable."
+55,Doctor,Yeah.
+56,Patient,"Uh, sleep was nonexistent."
+57,Doctor,Okay.
+58,Patient,Couldn't get comfortable.
+59,Doctor,Yeah.
+60,Patient,"Uh, where we're at now ..."
+61,Doctor,Mm-hmm (affirmative).
+62,Patient,"Uh, I still have pain that goes down this side in the back."
+63,Doctor,Your shoulder?
+64,Patient,Yeah. 
+65,Doctor,Okay. 
+66,Patient,"Uh, I have pain quite a bit when I swallow."
+67,Doctor,Okay.
+68,Patient,"Um, and I'm still having problems swallowing certain things."
+69,Doctor,Okay.
+70,Patient,"Uh, it's better."
+71,Doctor,Mm-hmm (affirmative).
+72,Patient,"Uh, hopefully it continues to get- get better."
+73,Doctor,Yeah. Yeah.
+74,Patient,"But I'm- I'm taking one step at a time, you know?"
+75,Doctor,Okay.
+76,Patient,Uh ...
+77,Doctor,Are you able to eat normal foods but you just struggle a little bit?
+78,Patient,"Yeah, uh, some take three or four swallows to get down."
+79,Doctor,Okay.
+80,Patient,"Um, uh, sandwiches, uh, stuff like that."
+81,Doctor,Mm-hmm (affirmative).
+82,Patient,"Um, meat sometimes, my pills sometimes. You know, nothing's all the time except for ..."
+83,Doctor,Yeah.
+84,Patient,... for the bread- the doughy stuff.
+85,Doctor,Okay. And are you coughing?
+86,Patient,I've coughed up a lot since the surgery.
+87,Doctor,Okay.
+88,Patient,"But that's good, because I got a lot out."
+89,Doctor,"Yeah, yeah."
+90,Patient,So I was happy about that.
+91,Doctor,But do you notice- do you feel like food is going the wrong way and you're having to cough while you eat or no?
+92,Patient,"No, it's going the right way, it's just-"
+93,Doctor,Okay. It's just taking some time.
+94,Patient,Taking some time to get down.
+95,Doctor,Okay. But it's been getting better?
+96,Patient,This- slowly. They put me on a new ...
+97,Other,Muscle relaxer.
+98,Patient,"... muscle relaxer. Uh, it seemed to help a little bit."
+99,Doctor,Okay.
+100,Patient,"Uh, because I was having real bad spasms in- in the back and ..."
+101,Doctor,Mm-hmm (affirmative).
+102,Patient,... the neck and he thought this would be a little more ...
+103,Doctor,Yeah.
+104,Patient,... helpful.
+105,Doctor,Yeah.
+106,Patient,And it did help tremendously ...
+107,Doctor,Mm-hmm (affirmative).
+108,Patient,... with sleep.
+109,Doctor,Yeah.
+110,Other,Yeah.
+111,Doctor,Okay.
+112,Patient,"Uh, but otherwise I think I'm doing pretty good."
+113,Doctor,Okay.
+114,Patient,"Uh, I try to behave."
+115,Doctor,Yeah.
+116,Patient,"Uh, sometimes forget."
+117,Doctor,Okay.
+118,Patient,Because you have reactionary ...
+119,Doctor,Sure.
+120,Patient,... moves that you do ...
+121,Doctor,Sure.
+122,Patient,... [crosstalk 000158] just ...
+123,Doctor,Yeah.
+124,Patient,And she's yelling at me before I'm halfway into them.
+125,Doctor,That's good.
+126,Patient,[inaudible 000208] (laughs)
+127,Doctor,"(laughs) That's good. Yeah, someone, uh, to control you, to make sure you don't do anything."
+128,Patient,"Uh, the incision's looking good."
+129,Doctor,Great.
+130,Patient,"Uh, haven't shaved yet down there."
+131,Doctor,Okay. Yeah.
+132,Patient,Just doing up here.
+133,Doctor,Yeah. Yeah.
+134,Patient,(laughs)
+135,Doctor,Okay.
+136,Patient,"Uh, you know, working on getting some ... I'm better this way. That and this way."
+137,Doctor,Okay.
+138,Patient,"Uh, doing my physical therapy and stuff."
+139,Doctor,Mm-hmm (affirmative). How's that going? Pretty well?
+140,Patient,Good. I would like to get back to rehab therapy.
+141,Doctor,Yeah. Okay.
+142,Patient,"Uh, it took me a long time to gain the air I have now."
+143,Doctor,Mm-hmm (affirmative).
+144,Patient,Because I went to pulmonary rehab ...
+145,Doctor,Mm-hmm (affirmative).
+146,Patient,... and worked really hard.
+147,Doctor,Mm-hmm (affirmative).
+148,Patient,"And I'd like to at least get that to be able to go for really light like, walking on the treadmill ..."
+149,Doctor,Sure.
+150,Patient,"... and stuff as soon as possible, because that's ... breathing is important (laugh)."
+151,Doctor,Mm-hmm (affirmative). Yeah.
+152,Other,What about driving though? I mean ...
+153,Doctor,Yeah.
+154,Patient,"I think I could drive, but ..."
+155,Doctor,Are you off narcotics and everything?
+156,Patient,Yep.
+157,Doctor,Okay.
+158,Patient,Yeah.
+159,Doctor,"You can do some short distances and see how you do. I, you know, we still don't want you to tweak your neck and ..."
+160,Other,Yeah.
+161,Patient,Right.
+162,Doctor,... that's a part of driving ...
+163,Other,Driving.
+164,Doctor,"... is just like, looking over your shoulder."
+165,Other,Yeah.
+166,Doctor,"Uh, so if you have limited range of motion, I would caution you in driving."
+167,Patient,"Well, I don't drive in busy areas to begin with anymore."
+168,Doctor,Okay.
+169,Patient,So I'm sort of a country road guy now.
+170,Doctor,Okay.
+171,Patient,"Uh, uh ... I go to Sanford. I don't even drive myself here anymore."
+172,Doctor,Okay.
+173,Patient,Uh ... I go to Fuquay.
+174,Doctor,Yeah.
+175,Patient,"Uh, hit Walmart."
+176,Doctor,Mm-hmm (affirmative).
+177,Patient,"I usually, even before I had the neck surgery, because I had the neck pain ..."
+178,Doctor,Yep.
+179,Patient,... parked in spots where I could just pull out.
+180,Doctor,Sure.
+181,Patient,"You know, there are certain things I changed in life ..."
+182,Doctor,Mm-hmm ( affirmative).
+183,Patient,... due to the pain.
+184,Doctor,"Yeah, sure."
+185,Patient,But the pain is better. The strength is better.
+186,Doctor,Okay.
+187,Patient,It's not super strong yet.
+188,Doctor,Yeah.
+189,Patient,But it's better.
+190,Doctor,Are you dropping stuff still or is that better?
+191,Patient,I think that's a little better.
+192,Doctor,Okay.
+193,Patient,I'm gripping stuff better. The numbness is still here.
+194,Doctor,Sure.
+195,Patient,But that's gonna take a while.
+196,Doctor,Yep.
+197,Patient,"But overall, I'm really happy."
+198,Doctor,Okay. Good.
+199,Patient,"You know, I have good days."
+200,Doctor,Yep.
+201,Patient,And I- then every now and then I'll ...
+202,Doctor,Yeah.
+203,Patient,... uh ...
+204,Doctor,"Well, you're still only a couple of weeks out from surgery, so ..."
+205,Patient,Yeah. I haven't done any boxing or anything stupid.
+206,Doctor,Yeah. Yeah. Let's hold off on that.
+207,Patient,"Yeah. Well, she might argue that, but I- I- I try not to do anything stupid."
+208,Doctor,Yeah. Yeah.
+209,Other,"Well, we did better when he came Monday and they changed up that muscle ..."
+210,Doctor,Uh huh.
+211,Other,... and then his- he was- we were not sleeping.
+212,Doctor,Yeah.
+213,Other,It was like [inaudible 000450].
+214,Doctor,Yeah.
+215,Patient,And I still- I still toss and turn.
+216,Other,"Yeah, well- well, that's better than you're sitting up, you're trying to lay on your side and your [inaudible 000458] rolling out, you're going to the couch, you're going to a chair, you're coming back, and you're standing in ..."
+217,Patient,"Standing in the middle of the front room going, Maybe if I lean against the wall ... "
+218,Other,... going- holding the pillow. I don't know if I'm supposed to ... I don't know. Just stand somewhere.
+219,Patient,So how did everything go?
+220,Doctor,Yeah.
+221,Other,"Yeah. Let's hear how this worked, because I didn't even ..."
+222,Doctor,Yeah.
+223,Other,... get to see you until the very end ...
+224,Doctor,Yeah.
+225,Other,when I was like ...
+226,Doctor,"Yeah. Yeah, everything went well, um, you know, we took out the bulging discs ..."
+227,Other,What did you do?
+228,Doctor,"Yeah, um, yeah."
+229,Other,How does it work?
+230,Doctor,"Yeah, how do you do the surgery?"
+231,Other,"Yeah. I mean, in a nutshell."
+232,Doctor,"Yeah, yeah, yeah, yeah. Sure."
+233,Other,"I mean, I don't know."
+234,Doctor,Yeah. So we go in through the incision in the neck ...
+235,Other,Right.
+236,Doctor,"... and we have to dissect down to the spine, so we have to move ... the reason why it's difficult swallowing, you know, for a few weeks after is we have to move the esophagus out of the way, we have to move the trachea out of the way, and then on the other side is your carotid artery and the major arteries going to your brain so we move that aside and create a window, uh, to get to your spine and then we figure out what level we're at, so we get some X-rays, um, in the operating room, um ..."
+237,Other,Wow.
+238,Doctor,"... and then we use a microscope and we take out the disc using a bunch of instruments, and then we drill down, uh, to by the spinal cord and then we put in a ..."
+239,Other,Wow.
+240,Doctor,... and then we put in a graft and then screw in the plate.
+241,Patient,Wow. That's- it's remarkable ...
+242,Other,It's ...
+243,Patient,... what you guys do and I thank you [inaudible 000620].
+244,Doctor,"Yeah, it's a great procedure and people do well, so I mean, it's great."
+245,Patient,"Yeah. Uh, I thank you guys for all your hard work. I-"
+246,Other,Yes.
+247,Doctor,"Yeah, I was ..."
+248,Patient,I don't know if I got to tell you that ...
+249,Doctor,... happy to do it.
+250,Patient,... during the-
+251,Doctor,"No, happy to do it. Happy to help."
+252,Patient,"But, uh, but yeah, I think I'm better."
+253,Doctor,Yeah. Great.
+254,Patient,I- I really do.
+255,Doctor,"Great, and you know, it's good that you're making progress. I don't expect you to be 100% better. Um, you're only two weeks out and it just takes time."
+256,Patient,Yeah.
+257,Other,Okay.
+258,Patient,"Well, they- they were telling me that, uh, the nerve isn't [inaudible 000646] and rejuvenation."
+259,Doctor,Mm-hmm (affirmative).
+260,Patient,"So you know, you're looking two and a half years."
+261,Doctor,Yeah.
+262,Patient,Uh ...
+263,Other,[inaudible 000654] said you have monkey arms.
+264,Patient,(laughs) I do have long arms. [inaudible 000658]
+265,Doctor,(laughs)
+266,Patient,"Uh ... you know, so I'm taking ..."
+267,Doctor,Yeah.
+268,Patient,... everything in- in ...
+269,Doctor,"Yeah, I think you have a good sense of, you know, your full recovery in three to six months is usually what we say. Usually, you know, two weeks you're feeling some differences. You still feel the effects of the surgery."
+270,Patient,Yeah.
+271,Doctor,"Usually at six weeks, the effects of the surgery are pretty minimal if not gone, um, and you're still recovering neurologically, and usually at three to six months is where we kind of ..."
+272,Patient,Yeah. Really it's just that one area through here ...
+273,Doctor,Yeah.
+274,Patient,... that's ...
+275,Doctor,You also have a rotator cuff surgery or ...
+276,Patient,No.
+277,Doctor,... injury there or ... ?
+278,Patient,The one doctor thought I had ...
+279,Doctor,Yeah.
+280,Patient,... a rotor cuff injury.
+281,Doctor,Okay.
+282,Patient,I don't know if I do.
+283,Patient,He thought I did.
+284,Doctor,"Okay. Oh, in the ICU?"
+285,Other,Yeah.
+286,Patient,Yeah.
+287,Doctor,Okay.
+288,Patient,Yeah.
+289,Other,Yeah.
+290,Doctor,Okay. And you have shoulder pain when you move or where is it?
+291,Patient,I still have shoulder pain. Yeah. Yeah.
+292,Doctor,Okay.
+293,Patient,So ...
+294,Doctor,Okay.
+295,Other,I don't care what he has. It's gonna be no surgery [inaudible 000754].
+296,Patient,With the neck.
+297,Doctor,Yeah.
+298,Patient,[inaudible 000757] shoulder pain. It's not as bad as it used to be.
+299,Doctor,Okay.
+300,Patient,So all together ...
+301,Doctor,Yeah. 
+302,Patient,"Uh, um ... I'm happy if you're happy."
+303,Doctor,Yeah.
+304,Patient,"But, uh ..."
+305,Doctor,Yeah.
+306,Patient,I would need- need a note saying I can return to light ...
+307,Doctor,Mm-hmm (affirmative).
+308,Patient,... pulmonary rehab.
+309,Doctor,Sure.
+310,Patient,Before they'll let me go back.
+311,Doctor,"Sure. I'll give you, yep, definitely give you a note. Um ... great, well, let me take a look at your incision and do an exam. And how often have you been wearing the collar?"
+312,Patient,I wear it quite a bit.
+313,Doctor,Okay. Well ...
+314,Patient,This one or ice one I have.
+315,Doctor,Okay.
+316,Patient,I wear the ice one more.
+317,Doctor,Okay.
+318,Patient,It helps with this.
+319,Doctor,Okay.
+320,Patient,Uh ...
+321,Other,So you want it off more?
+322,Patient,"Well, I take it off in the middle of the night."
+323,Doctor,Yeah.
+324,Other,Yeah.
+325,Patient,"And I'll go around the house during the day without it on for a couple hours, but when my ... I don't know how to explain it. It feels like my head gets heavy ..."
+326,Doctor,Yep.
+327,Patient,... I put it on.
+328,Doctor,"Yeah. So you can slowly wean it off. So your neck muscles are gonna be weak, and so we don't want to keep them weak by keep them- keeping them supported in the collar, so over the next few days, couple of weeks, start wearing the collar less and less."
+329,Patient,Yeah.
+330,Doctor,"You have no technical reason for needing it, uh, beyond the two week point."
+331,Other,Even for sleeping time?
+332,Doctor,Even for ... you don't need it.
+333,Other,Okay.
+334,Doctor,"If it makes you more comfortable, that's fine."
+335,Other,Yeah.
+336,Doctor,But I definitely want you to start activating your neck muscles more ...
+337,Patient,Okay.
+338,Doctor,"... and [crosstalk 000925] support your neck, your head."
+339,Other,Okay.
+340,Patient,Okay.
+341,Doctor,Because that will also help with the pain and everything.
+342,Patient,"Well, I'll wear it when I'm riding home [inaudible 000931]."
+343,Doctor,Yes. That [crosstalk 000932].
+344,Other,(laughs)
+345,Patient,(laughs)
+346,Doctor,"That- that- that makes sense [crosstalk 000937]. All right. So you still got some of that glue stuff, huh?"
+347,Other,"Well, we- we're showering and stuff but we're not touching stuff. Are we supposed to wash that off?"
+348,Doctor,"No, no, you're not supposed to rub it off, no. It looks great. I'm surprised so much is still there, but that's okay."
+349,Patient,"Well, I shower every day, so ..."
+350,Doctor,"Yeah. Yeah, so um, you can- are you facing the shower or how are you showering?"
+351,Patient,I'm facing.
+352,Doctor,"Okay. Um, so that's fine and have soap and you can rub it lightly with, you know, soap."
+353,Patient,Stuff sticks to me longer than it does generally most people.
+354,Doctor,Okay.
+355,Patient,"I will tell you, uh, I've had band-aids rip skin off."
+356,Other,"It's um- but it's fine, right? It'll ..."
+357,Doctor,"Yes. Yes, it will go away for sure."
+358,Other,"... just, as it wears off for good. We don't need to do anything with it."
+359,Doctor,"Nope. Nope, don't do anything. Don't rub it off."
+360,Patient,But tell- tell- tell the surgeon [inaudible 001033] that I didn't get my Frankenstein scar. I want- I wanted something out of this.
+361,Doctor,(laughs) You'll have a little scar there.
+362,Patient,(laughs)
+363,Doctor,It won't be too bad.
+364,Patient,I'm teasing.
+365,Doctor,"It won't be too bad. Want me to check your strength out? Can you hold your arms up like this? Keep it up, keep it up, keep it up. Okay. Squeeze my hands as hard as you can. Good. Pull me in. Pull. Okay. Push me away. Push. Okay, lift this knee up. Keep it up, keep it up, keep it up."
+366,Other,"Oh, yeah, [inaudible 001103] cramps."
+367,Doctor,"Lift this knee up. Keep it up, keep it up. Okay. [inaudible 001110] cramps."
+368,Patient,I've been getting leg cramps and stomach cramps.
+369,Doctor,Okay.
+370,Other,Is that anything to do with anything?
+371,Patient,I didn't think it was but ...
+372,Doctor,Not with the surgery.
+373,Other,"Oh, okay."
+374,Doctor,Um ...
+375,Other,"Well, ther- the therapy yesterday, he couldn't do that side because he was getting [crosstalk 001124] cramps."
+376,Patient,I was just cramping in the leg so bad. But I did [inaudible 001131] a long time on this side.
+377,Doctor,Okay. Okay. I don't have a good reason for the leg cramps.
+378,Other,"Okay. Well, you can make something up and [crosstalk 001138] happy."
+379,Doctor,(laughs)
+380,Patient,He's an [crosstalk 001141] (laughs).
+381,Doctor,(laughs)
+382,Other,(laughs)
+383,Doctor,"No, uh ..."
+384,Patient,I- I like to laugh. I'm sorry.
+385,Doctor,"No, no, don't be sorry at all. That's great. I'm happy you're happy and doing well."
+386,Patient,I was one of those fat kids in school so my- my whole defense and armament was humor.
+387,Doctor,Okay.
+388,Patient,So now I'm a fat adult so I still use it (laughs).
+389,Doctor,So [crosstalk 001157]. That's good. That's great (laughs).
+390,Other,We are so much better now than ...
+391,Patient,Yeah. Um ...
+392,Doctor,Yeah.
+393,Patient,... those first few days were rough.
+394,Doctor,Yep.
+395,Patient,I- I- I really doubted my decision.
+396,Doctor,Yeah. I'm sure.
+397,Other,"Yeah, I did, too (laughs)."
+398,Patient,When I came awake and I couldn't control my leg ... I was trying to control my leg but I couldn't stop it and ...
+399,Other,I thought you were focusing and doing that because I know how you funnel your pain. I was thinking [crosstalk 001224].
+400,Patient,I usually have really good pain resistance.
+401,Doctor,Mm-hmm (affirmative).
+402,Patient,"I- I- you know, I've worked three weeks with a broken arm ..."
+403,Doctor,Yeah.
+404,Other,But ...
+405,Patient,"... before they said, uh, you know, your ... it was swollen. I said, Ah, [inaudible 001238]. But I got an X-ray. Finally they made me go get an X-ray. I was doing [inaudible 001244] flipping boards off of my head. And they go, No, it's broke. (laughs)"
+406,Doctor,(laughs)
+407,Other,"You guys were so calm and collected and I was like, What!"
+408,Patient,I'll let you [inaudible 001255]. You're the wife. You're the significant other.
+409,Doctor,Yeah.
+410,Patient,They panic.
+411,Doctor,That- that's normal.
+412,Patient,"Um, but yeah, I appreciate everything."
+413,Doctor,"Yeah, great."
+414,Patient,You guys were awesome.
+415,Doctor,Great. I'm glad you're doing so well.
+416,Other,"So do we have to do anything else? Now, he comes back in two more weeks. He sees you?"
+417,Doctor,"Um, so he will come back usually in four weeks. You're two weeks out right now."
+418,Patient,Yeah.
+419,Other,Two weeks.
+420,Doctor,"Um, let's see, do you have-"
+421,Patient,[crosstalk 001314] on the 26th.
+422,Doctor,Do you have an appointment made with us?
+423,Patient,On the 26th.
+424,Doctor,Oh. That's weird.
+425,Other,Is that not right? Isn't it- would that be about four weeks?
+426,Doctor,"Yeah, usually we'll do a six week appointment. I mean, it's not a big deal. It's- I mean, do you guys prefer the two week appointment?"
+427,Patient,It doesn't matter to me.
+428,Other,"That's up to you, honey. I mean ..."
+429,Doctor,Okay. Yeah.
+430,Other,... what- what do you think we need?
+431,Doctor,"Yeah, typically, um, we do a two week and a six week, um, and at six weeks he gets some X-rays."
+432,Other,"Oh. Well, then, do we need to tweak it?"
+433,Patient,"Okay, well, let's do six-"
+434,Doctor,"Yeah, I'll tweak it. Yeah."
+435,Other,Okay.
+436,Doctor,"So, um ..."
+437,Patient,Because you guys made them both.
+438,Other,Yeah.
+439,Doctor,Yeah. I don't know who made that one. That's interesting.
+440,Other,"I mean, we'll come if you need him, but ..."
+441,Doctor,No. I think we're okay.
+442,Other,Okay.
+443,Doctor,"So we'll make one for, um, August 13th, so a month from now."
+444,Patient,Okay.
+445,Other,Okay. Do you have any mornings or [inaudible 001407] late afternoons [inaudible 001408]?
+446,Doctor,Um ... we'll have to check with the front desk.
+447,Other,Do it up there? Okay. We'll do that.
+448,Patient,So cool. I'm driving myself to the [inaudible 001418].
+449,Other,Okay.
+450,Patient,That's a good start.
+451,Other,Okay.
+452,Patient,That's very close.
+453,Other,I know.
+454,Doctor,"All right. So I will put that in, and then let me put in for you to get X-rays at the same time."
+455,Patient,She got-
+456,Other,You just park where you can pull in and out [inaudible 001435].
+457,Patient,She thinks I try to push everything too fast.
+458,Doctor,(laughs) Definitely be careful.
+459,Other,"Yeah, yeah, he tells me, um, I've been feeling like peaches so why we don't drive? in, you know, a week out. I said, I don't think we should be doing that."
+460,Doctor,Yeah.
+461,Other,"It's raining, too. "
+462,Doctor,Yeah.
+463,Other,Um ... I grew up in the rain. Liquid sunshine. Let's go. I'm ready. I'm feeling good today.
+464,Doctor,(laughs)
+465,Other,"By the time we drove, we got out of the car, he walked around to look at the peaches, and we got home and he was like, I don't think I'm so good."
+466,Doctor,(laughs) Have you seen your X-rays? Has anyone showed you?
+467,Patient,No.
+468,Doctor,"Okay. Because we got X-rays immediately post op, so ..."
+469,Patient,"Oh, cool."
+470,Doctor,So this is what it looks like. This is what [inaudible 001513] your neck.
+471,Other,Cool.
+472,Doctor,"So, um ..."
+473,Other,Wow.
+474,Doctor,So this is your spine and ...
+475,Other,Yep.
+476,Doctor,... here are the screws and here's the plate and then there's a small graft ... it's hard to see ... that is replacing the disc.
+477,Patient,Awesome.
+478,Other,"Oh, that is awesome."
+479,Doctor,Yep. And this is the front view. [inaudible 001532]
+480,Patient,Thank you for sharing.
+481,Doctor,Yeah. Yeah.
+482,Patient,I appreciate that.
+483,Doctor,Yeah. It looks great.
+484,Other,"I wanted it to be so I could stick it on a magnet, but ..."
+485,Doctor,(laughs)
+486,Patient,All those pearly white teeth.
+487,Doctor,Yeah.
+488,Patient,Is that my fake ones?
+489,Doctor,Yes.
+490,Patient,(laughs)
+491,Other,(laughs)
+492,Doctor,(laughs) That's all your fillings.
+493,Other,Cool.
+494,Patient,"As you can see, the dentist loves me, too."
+495,Doctor,Can't hide them.
+496,Patient,"I saw those [inaudible 001556] like that. I said, Oh, that's gotta be all the work ... my dental work."
+497,Doctor,Yep. Yep.
+498,Other,So we're good.
+499,Doctor,"Well, you're good."
+500,Other,Anything else we need to do? Anymore ...
+501,Doctor,"Yeah, so ..."
+502,Other,... extra vitamins? B12 shots? Anything [crosstalk 001609]?
+503,Doctor,"So continue the physical therapy, um ..."
+504,Other,Okay.
+505,Doctor,"... obviously, keep your glucose under check."
+506,Other,Yes.
+507,Patient,Yeah.
+508,Doctor,"Um ... just slowly wean off the collar, start strengthening your neck muscles. PT should help you with that."
+509,Other,Okay. 
+510,Doctor,And then ...
+511,Other,And the swallowing should continue to get better?
+512,Doctor,And the swallowing should continue to get better. Yes.
+513,Patient,Awesome.
+514,Doctor,"If it- in the next two weeks, if it doesn't- you know, if it doesn't continually get better, just let us know. We can always see you earlier."
+515,Other,Okay.
+516,Doctor,"Um, but, uh, this is normal. Most people have some difficulty a couple of weeks post op."
+517,Patient,Okay.
+518,Doctor,And it gets better. By the six week mark usually ...
+519,Patient,You're good to go.
+520,Doctor,... people are [crosstalk 001643]. Yeah.
+521,Patient,Awesome.
+522,Doctor,Okay?
+523,Patient,"Well, if I can get a paper for rehab-"
+524,Doctor,"Oh yes, yes, yes. Um, they just need a physician to sign off on it, correct?"
+525,Patient,Yeah.
+526,Doctor,Okay.
+527,Patient,Then I can go back and [inaudible 001657].
+528,Doctor,"Well, let me [inaudible 001657]."
+529,Other,[Robert 001659] can go and play with his friends. [inaudible 001708]
+530,Patient,"Well, [inaudible 001711]. That would be a great screensaver."
+531,Other,So you do that- no. So you do this type of surgery quite often?
+532,Doctor,"Yeah, it's pretty common, uh, here. We do a lot of spine here and a little bit of brain, um ..."
+533,Other,"Oh, brain work, honey (laughs)."
+534,Patient,"Um, I- I got- I gotta say, um ... when I checked out, the young doctor who, uh, brought me my outpatient paperwork, I did wanna slap on the head."
+535,Doctor,Why?
+536,Other,What? I-
+537,Patient,"Because he goes, You know this is just a simple band-aid surgery. You should be better in a couple of days. Don't let them tell you any different."
+538,Other,Who was that?
+539,Patient,I'm like- I'm like-
+540,Doctor,Who-
+541,Patient,He was so young.
+542,Other,I don't know. I don't- it wasn't one of you guys.
+543,Doctor,Oh. Interesting.
+544,Patient,But I thought ...
+545,Other,Who was that?
+546,Doctor,Someone in the hospital?
+547,Patient,Yeah.
+548,Doctor,Was it a doctor or a nurse?
+549,Patient,It was a doctor.
+550,Other,I don't remember who he was.
+551,Doctor,[inaudible 001812] doctor was he seeing?
+552,Patient,"He was the one who outpatient me. Signed my outpatient paperwork, and I just thought."
+553,Other,"Oh. Oh, oh, oh, oh, oh, oh, oh, oh, oh, oh, oh, oh."
+554,Patient,Yeah.
+555,Doctor,Who?
+556,Other,"Yeah, we were on the sixth floor. Um ... he- yeah, I know, but he was super young and I'm sure to him, he sees it- they see it a lot, so ..."
+557,Patient,"I thought, well, I- I wanted to say wait till you're about 60 and you have this done and tell me it's a pancake surgery."
+558,Doctor,Yeah. No surgery is a pancake surgery.
+559,Patient,Yeah.
+560,Other,No.
+561,Doctor,We've seen things go wrong with the simplest surgeries. [inaudible 001851]
+562,Patient,You know what? You guys are very gifted. I had no-
+563,Other,Yeah.
+564,Patient,"I had, as you could tell, no fear about it during- before the surgery."
+565,Doctor,Yeah.
+566,Other,"I wish I could have seen you guys before, though. That would have been nice."
+567,Patient,"Yeah, she wanted to meet the actual ..."
+568,Doctor,Yeah.
+569,Patient,... Dr. [Tanner 001905].
+570,Other,"Well, I- I would have liked to be there with the team for even a minute ..."
+571,Doctor,Yeah.
+572,Other,... to see you when you took him.
+573,Doctor,Yeah.
+574,Other,But I understand [crosstalk 001913].
+575,Patient,But I told her [crosstalk 001913].
+576,Doctor,"Yeah, the flow is very weird. We're doing stuff and recording things. It's-"
+577,Patient,"I just told her he had whiter hair than me, he was a little skinnier ..."
+578,Doctor,Yeah.
+579,Patient,... maybe the same age.
+580,Doctor,Yeah.
+581,Patient,Around the same age.
+582,Doctor,Yeah. Yeah.
+583,Patient,Dr. Tanner.
+584,Doctor,Yeah.
+585,Other,Awesome. Okay.
+586,Doctor,"Awesome. Well, is this all you need?"
+587,Patient,"Thank you. That's all I need. Just something that says, uh ... it's safe for me. Yeah. Awesome."
+588,Doctor,Great.
+589,Other,Good deal.
+590,Doctor,"All right. Well, it was great seeing you both."
+591,Other,Thank you so much.
+592,Doctor,"Yeah, you're welcome. We'll see you in four weeks."
+593,Other,Yep. We see you again or somebody else?
+594,Doctor,"Um, yes, I should be here."
+595,Other,Okay.
+596,Patient,Awesome. Thank you so much.
+597,Doctor,You're welcome.
+598,Other,Are you from one of the other hospitals and-
+599,Doctor,"I go to Duke as well, so ..."
+600,Other,"Oh, okay."
+601,Doctor,... [inaudible 001951] back and forth and ...
+602,Other,Okay.
+603,Doctor,"... it depends if I'm in the operating room that day or not, but I should be, uh ..."
+604,Other,Okay.
+605,Doctor,... I should be here.
+606,Other,Awesome. Thank you so much.
+607,Patient,Thank you for all your help.
+608,Doctor,"All right. You're welcome. Take care. And you can stop by the front desk. Just let them know that, um, we'll cancel that July visit and we'll [inaudible 002006]."
+609,Other,Okay. All right.
+610,Doctor,All right.
+611,Patient,Thank you.
+612,Doctor,No- no problem.
+613,Doctor,So how are you doing today?
+614,Patient,"Oh, okay I reckon."
+615,Doctor,Yeah.
+616,Patient,I didn't sleep well last night.
+617,Doctor,Okay.
+618,Patient,Slept about two hours.
+619,Doctor,"Ah. All right. Must be tired. Um, so I was just looking through so when's the last time we saw you? Seems like we saw you back in 2015, so it's been a while."
+620,Patient,"Ah, I had back surgery here-"
+621,Doctor,Yeah. Yeah.
+622,Patient,... 2010. I don't know that you've seen me since then.
+623,Doctor,"Yeah, I see a note here from 2015, so I guess we haven't seen you in about-"
+624,Patient,"Oh, that's right-"
+625,Doctor,'Cause of your neck symptoms with the neck and-
+626,Patient,"... they were, uh, yeah, they were gonna try to schedule surgery for it and then I was told that maybe I ought to ... well, we discussed it, said well, maybe I'll wait until I just can't stand it anymore-"
+627,Doctor,Uh-huh (affirmative).
+628,Patient,"... so but, I went to, I got a new doctor in [Saulsberry 000048]-"
+629,Doctor,Uh-huh (affirmative). Okay.
+630,Patient,"I went to see her, she said I'm gonna put you in 'cause you need to get the surgery done."
+631,Doctor,Yeah.
+632,Patient,And so ...
+633,Doctor,Okay.
+634,Patient,"... I was gonna wait, but ..."
+635,Doctor,Yeah.
+636,Other,He's been getting those shots every six months and this time-
+637,Patient,"Yeah, I just had shot, I had shots up here I think four weeks ago. Epidural-"
+638,Doctor,"Yeah, epidural neck shots."
+639,Patient,Yeah.
+640,Doctor,Okay.
+641,Patient,Didn't work this time.
+642,Doctor,Okay.
+643,Patient,"Sometimes, usually helps some not, not for, can't go but every six months."
+644,Doctor,Yeah.
+645,Patient,It usually helps some. This time it didn't help at all.
+646,Doctor,"Okay, so this is the first time where it didn't really help?"
+647,Patient,Yeah.
+648,Doctor,Okay.
+649,Other,But he's had trouble turning his neck and stuff.
+650,Patient,"Yeah, my neck lock, lock, locked up on me sometimes and I take my fingers like this-"
+651,Doctor,Yeah.
+652,Patient,... and roll it down my neck. And roll I hear it creak [inaudible 000137].
+653,Doctor,Okay. So it's-
+654,Patient,"I was doing it at 4 o'clock this morning in the bed doing it. I couldn't, I couldn't-"
+655,Doctor,"So it's getting stiffer you think, your neck?"
+656,Patient,Yeah. It hurts like ... gives me headaches every day of my life. I carry aspirins in my pocket. I'll try not to take more than one aspirin a day.
+657,Doctor,"Yeah. Yeah. Yeah. And um, are you having any pain in your arms?"
+658,Patient,Yeah.
+659,Doctor,Shooting pain?
+660,Patient,"Usually when I'm sleeping it's a ... it actually, actually wakes me up hurting if I move my arm it hurts worse."
+661,Doctor,"Okay, so shooting pain in your arm?"
+662,Patient,"Once I get up, it'll, it'll go away."
+663,Doctor,"Yeah, okay. And the pains are shooting pain down your arms or what's the pain like?"
+664,Patient,"Hard to explain. It surprises me. It's like uh, I don't know, it's like as long you don't move it, it don't hurt."
+665,Doctor,Mm-hmm ( affirmative).
+666,Patient,"If you move it, it hurts though."
+667,Doctor,Mm-hmm (affirmative).
+668,Patient,"It's not really muscular, but it's like way down to the bone type thing."
+669,Doctor,Yeah.
+670,Patient,I don't know how to explain it.
+671,Doctor,Yeah.
+672,Patient,But I have actually [inaudible 000239] my back. I don't if it's something-
+673,Doctor,Mm-hmm (affirmative).
+674,Patient,... that started over the past six months.
+675,Doctor,Okay. Does it hurt when you bend your neck forward? Backward?
+676,Patient,"Yeah, well, in your inner ear. People can't hear it, but I can hear it. If I turn my head, it'll go. It'll hurt like ... if I bend down."
+677,Doctor,Yeah.
+678,Patient,And I'll do these exercises here. One doctor couple years ago told me to put your chin on your chest-
+679,Doctor,Mm-hmm (affirmative).
+680,Patient,... and put the head like this-
+681,Doctor,Mm-hmm (affirmative).
+682,Patient,... and that helps.
+683,Doctor,Okay.
+684,Patient,That really does help.
+685,Doctor,Okay.
+686,Patient,When it's going.
+687,Doctor,Okay. And you've tried the traction as well? You've never tried neck traction? They never-
+688,Patient,They were going to-
+689,Other,They were going to and they said they wasn't going to do it.
+690,Doctor,Okay.
+691,Patient,"Yeah, we went to Saulsberry-"
+692,Other,"Yes, mm-hmm (affirmative)."
+693,Doctor,Gotcha.
+694,Other,"Then we went through all that in the, when they did all the exercises and all that-"
+695,Patient,Yeah.
+696,Other,... and they did all that stuff and all. He's been through everything.
+697,Doctor,"Okay. Yeah. Okay. And so, the injections have been doing okay and then just this past time-"
+698,Patient,"Well, honestly, it wasn't something that I really like to do. It doesn't really hurt that bad till they numb it. The numbing thing hurts worse, but-"
+699,Doctor,Yeah. Yeah.
+700,Patient,"It doesn't last long, you know?"
+701,Doctor,Yeah. Yeah.
+702,Patient,I mean it's not like ... you can't go over six months.
+703,Doctor,Yeah.
+704,Patient,"And I might feel good for, sometimes a few days, sometimes a few weeks."
+705,Doctor,Right.
+706,Other,But this last one didn't do anything.
+707,Patient,"Matter of fact, after I got this last time, it made me feel bad, weird."
+708,Doctor,Really? Yeah.
+709,Patient,Confused. Now I'll tell you why. Two weeks before I went-
+710,Doctor,Mm-hmm (affirmative).
+711,Patient,"... for my neck shots, I got some kind of bad virus-"
+712,Doctor,Okay.
+713,Patient,... and so I went to the emergency room in Saulsberry and they gave me a week's worth of pills to fight the flu bug.
+714,Doctor,Mm-hmm (affirmative).
+715,Patient,"Uh, at the end of it, it didn't get it done, so I went back. They gave me another seven days."
+716,Doctor,Yeah.
+717,Patient,And I understand both of them were steroids. Then I come up here and got this epidural steroid shot so I think I got-
+718,Doctor,Uh-huh (affirmative).
+719,Patient,... steroid poisoning.
+720,Doctor,Hm.
+721,Patient,"Matter of fact, the doctor even said we might not ought to do this 'cause you've had so many steroids here lately. He said well, I'm gonna go ahead and do it anyway, but then I felt real confused for about a week. My bowels were off."
+722,Doctor,Yeah.
+723,Patient,Lot of different stuff.
+724,Doctor,Hm. Okay. Um.
+725,Patient,But I guess you could say [inaudible 000456]. They sent me a letter telling me everything that was wrong.
+726,Doctor,Yeah.
+727,Other,What do you think?
+728,Doctor,"Yeah, so-"
+729,Patient,"I don't know, I don't know what all that means. They was like ... What causes your spinal cord to narrow?"
+730,Doctor,"Yeah, so what's, what's happened is um-"
+731,Other,Is that it right there?
+732,Doctor,"Yeah, this is the MRI. So this is, these gray things are the blocks of bone that make up your spine. These black things are the discs which is like the cartilage in between-"
+733,Patient,Uh-huh (affirmative). Okay.
+734,Doctor,"And so you can see, you know, usually your spine's usually supposed to be in a straight line, but you can see here, this part is kind of abnormal and it's kind of pressing in to the spinal canal."
+735,Patient,"That's them, that's them two vertebrae there pressing it in?"
+736,Doctor,Yeah.
+737,Patient,Right there?
+738,Doctor,"Yeah, these two are the main problems. So you see how-"
+739,Patient,What is that? Like the fifth one down?
+740,Doctor,"So this is C2, 3, so 4 and 5 are the main problems."
+741,Patient,"Okay, now let me ask you while you're there. Is that about right here?"
+742,Doctor,"Um, probably, yeah."
+743,Patient,"Oh, yeah, oh, right there."
+744,Doctor,Somewhere around there.
+745,Patient,"Oh, right there. So that's about it."
+746,Other,Where's the spurs?
+747,Patient,"That's what's causing the problem. Right there. Probably that one, the fifth one down."
+748,Doctor,"So what your feeling is the ... back here. This is the front of your neck. This is the back. So you're probably, you're feeling this stuff. Um ..."
+749,Patient,"Yeah, it's in the back definitely. It hurts."
+750,Other,What about bone spurs? They told us he had bone spurs pushing on-
+751,Patient,And that's off of them little feeler looking things.
+752,Doctor,Mm-hmm (affirmative). So these are some of the bone spurs and calcified material that's ... You can see how wide the spinal canal is here and here.
+753,Other,Mm-hmm (affirmative).
+754,Doctor,And look how narrow it is here.
+755,Patient,"Oh, yeah. Okay, I see what's happen ... it's pressing it in."
+756,Doctor,"So, so, so it's pressing in. So, you know, and the arthritis is what's causing your neck pain."
+757,Patient,"All right. Well, let me ask you this."
+758,Doctor,Mm-hmm (affirmative).
+759,Patient,"In 1974, I jumped out of an airplane with the military."
+760,Doctor,Mm-hmm (affirmative).
+761,Patient,And it was at Camp Lejeune during-
+762,Doctor,Mm-hmm (affirmative).
+763,Patient,... a military exercise.
+764,Doctor,Mm-hmm (affirmative).
+765,Patient,The wind was gusting 35 miles an hour. We jumped into a corn field.
+766,Doctor,Okay.
+767,Patient,Had a creek across the center of it.
+768,Doctor,Yeah.
+769,Patient,"Now when they hit the ground, our chutes didn't deflate. The wind drag ... I run across the ground about 15 mile an hour on my back."
+770,Doctor,Yeah.
+771,Patient,I went through a creek-
+772,Doctor,Yeah.
+773,Patient,"... and then it, I go down, my chute jumps it and it's still inflated-"
+774,Doctor,Mm-hmm (affirmative).
+775,Patient,... dragging me and my head hits the back on the other side.
+776,Doctor,Yeah.
+777,Patient,Could that be what did that?
+778,Doctor,"Um, one event-"
+779,Patient,"Because I've had neck problems ever since then. The older I get, the worse it gets."
+780,Doctor,"Yeah, so one event, probably not, but, you know, we see this often in veterans who, you know, you guys are carrying heavy like rucksacks for miles-"
+781,Patient,Yeah.
+782,Doctor,... and doing a lot of things and so we see-
+783,Patient,"Yeah, we definitely did that."
+784,Doctor,"... you know, more spine problems in the veteran population, both in the neck and in the lower spine as well. So, I mean, yeah. How long were you in the service?"
+785,Patient,Three years.
+786,Doctor,"Okay. So, I mean, doing all that stuff definitely takes a toll. I can't say that one incident is responsible."
+787,Patient,"Well, I know after that happened I couldn't hardly turn my head. I wouldn't go to sick bay because you didn't do that back then, but uh ..."
+788,Doctor,"Yeah. Any new, any weakness or anything in your arms or no? You're walking okay?"
+789,Patient,"Yeah. Well, my, my knees are giving out on me, but yeah."
+790,Doctor,Okay.
+791,Patient,Sometimes ... Would it affect my balance? Here lately every once in a while I just feel like I'm not balanced.
+792,Doctor,"It can. Yeah, it can."
+793,Patient,And then I go ...
+794,Doctor,Yeah. Let me examine you.
+795,Patient,"What do you want me to do, just stay here?"
+796,Doctor,Yeah. Just stay here.
+797,Patient,"It ain't like a balance sometimes, not all the time just certain times."
+798,Doctor,"Okay. All right. Hold your arms up like this. Keep it up. Keep it up. Good. Squeeze my hands. Squeeze as hard as you can. Good. Pull me in. Pull. Good. Push me away. Good. All right. Relax your, relax your hands. Okay. Relax this hand. Relax your fingers. Okay. Relax your arms. Relax. Okay. Lift this knee up. Lift your knee up off the chair."
+799,Patient,Oh.
+800,Doctor,Keep it up. Keep it up.
+801,Patient,"Oh, that hurts."
+802,Doctor,Where does it hurt? In your back?
+803,Patient,It hurts [inaudible 000928].
+804,Doctor,Lift this knee up. Keep it up. Has anyone taken a look at your hips?
+805,Patient,"Uh. Oh. Wait [inaudible 000935]. Uh, no. I had back surgery here."
+806,Doctor,Yep. Straighten your knee out.
+807,Patient,Out?
+808,Doctor,"Yep. Keep it straight. Keep it straight. Good. Bend your knee. Bend it, bend it, bend it. Good. Straighten this leg out. Keep it straight. Keep it straight."
+809,Patient,That kinda hurts.
+810,Doctor,Good.
+811,Patient,[inaudible 000959] my right knee's the worse. Does what now?
+812,Doctor,Bend it. Bend your leg. Keep it bent.
+813,Patient,Bent?
+814,Doctor,Yep. Good. Pull your toes up. Keep them up. Good. Any numbness or tingling? [crosstalk 001013]. Normal?
+815,Patient,Kind a bit of a [inaudible 001016].
+816,Doctor,It's numb here? From here to here?
+817,Patient,"Well, not right there but ..."
+818,Doctor,Have you had knee surgery?
+819,Patient,No. I know it's coming. Almost every time I stand up-
+820,Doctor,Yeah.
+821,Patient,Pop Pop.
+822,Doctor,Gotcha.
+823,Patient,"Sometimes it hurts, sometimes-"
+824,Doctor,And no numbness in your hands or your arms or anything like that?
+825,Patient,No.
+826,Doctor,Okay. All right. Let me check one more thing.
+827,Patient,I have trouble with this finger.
+828,Doctor,Relax. Relax your foot. Okay.
+829,Patient,I just got over plantar fascitis in both feet and I got [inaudible 001049] spurs in both heels.
+830,Doctor,All right. All right. You don't really have any weakness in your arms which is good.
+831,Patient,"Yeah, I'm pretty strong."
+832,Doctor,Yeah.
+833,Patient,For my age.
+834,Doctor,"Yeah. All right. Well, you know, so surgery is something that you're interested in I guess potentially if it's going to help your symptoms?"
+835,Patient,I just don't know if I don't do something about it what's going to happen when I'm too old to do something about it?
+836,Doctor,Yeah. Yeah.
+837,Patient,You know?
+838,Doctor,Yeah.
+839,Patient,"I don't know what age that cutoff is, but ..."
+840,Doctor,Uh-huh (affirmative).
+841,Other,"Well, she told him, she's the one that told us to come here. She said she wanted to recommend it because he needed to get something done."
+842,Doctor,Uh-huh (affirmative). Yeah.
+843,Other,"So, I don't know."
+844,Doctor,"Yeah. And um, are you on any blood thinners? Aspirin? Anything like that?"
+845,Patient,I take aspirin every day because my neck gives me a headache.
+846,Doctor,Okay. Okay.
+847,Patient,And I know it's coming from it.
+848,Doctor,"Okay. You just take aspirin. Okay, um-"
+849,Patient,"I carry them, I carry them in my pocket and I try not to take more than one a day of them 325s."
+850,Doctor,Yeah. Okay. Okay.
+851,Other,Mm-hmm (affirmative).
+852,Doctor,"Okay. And um, do you smoke?"
+853,Patient,Yeah.
+854,Doctor,Okay. So ...
+855,Patient,"But before I have this next surgery, that's when I'm quitting."
+856,Doctor,"Yeah. Because um, you know, the most likely surgery that you need is called an anterior cervical fusion and that's where we would probably have to take all of this bone out and put a graft in there to fill in the space and then we'll put screws into probably the C3 right here and into C6 here. Put screws there and put a plate over it. So that's a fusion. And so-"
+857,Patient,"Just like my back, right?"
+858,Doctor,Kind of like your back.
+859,Patient,I got six 3 screws-
+860,Doctor,"Correct. Kind of like that and so, um, we can't do the surgery if you're smoking. The reason being is there just won't be fusion. It'll, the fusion will fail."
+861,Patient,"No, I understand."
+862,Doctor,"Um and so it's something definitely with like a big neck surgery like that we don't want you smoking and obviously not only the respiratory problems, but also healing for both the bones and your skin and everything like that-"
+863,Patient,"No, I'll, I'll take care of it."
+864,Doctor,... so we definitely want you to cut down and stop.
+865,Patient,I been wanting to quit anyway.
+866,Doctor,"Yeah. Um, and so, um, you know, we'll do the surgery with uh, Dr. [Abdulbarr 001318], who I will introduce you to. He's next door."
+867,Patient,Is that the one [inaudible 001323]? That name sounds familiar.
+868,Doctor,"Yeah. I don't think he did your previous surgery, but he's one of our complex spine surgeons. Um and so we'll go over the procedure, but it's going to be an incision in your neck. Um-"
+869,Patient,Through the front?
+870,Doctor,"Through the front. Um and we'll take out this chunk of bone, put in a graft and then put in screws and then put a plate over it. Um, I can tell you the risks of the procedure which is we can hurt you more meaning, you know, we can cause damage to a nerve or to your spinal cord that could cause-"
