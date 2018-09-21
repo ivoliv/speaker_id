@@ -176,16 +176,16 @@ class ImdbCorpus():
             print('Generated vocab: {:,}'.format(len(self.vocab)))
 
     def tokenize(self, filename, lines, text_col, tag_col):
+        
+        specials = ['<pad>', '<eol>', '<unk>', '<upcase>']
+        for s in specials:
+            if s not in self.vocab.stoi.keys(): 
+                self.vocab.add_token(s)
 
         if lines == 0:
             df = pd.read_csv(filename)
         else:
             df = pd.read_csv(filename, nrows=lines)
-
-        self.vocab.add_token('<pad>')
-        self.vocab.add_token('<eol>')
-        self.vocab.add_token('<unk>')
-        self.vocab.add_token('<upcase>')
 
         tuplelist = []
 
@@ -194,8 +194,8 @@ class ImdbCorpus():
                     .replace('/>', ' ').replace('.', ' . ').replace(',', ' , ')\
                     .replace("'", " '").replace('-', ' - ').replace('?', ' ? ')\
                     .replace('[', ' [ ').replace(']', ' ] ').replace('!', ' ! ')\
-                    .replace('(', ' ( ').replace(')', ' ) ').replace('. . .', '...') \
-                    + ' <eol> ').strip()
+                    .replace('(', ' ( ').replace(')', ' ) ').replace('\"', ' \" ')\
+                    ).strip() + ' <eol> '
             sent = r[1][tag_col].strip()
 
             ilist = []

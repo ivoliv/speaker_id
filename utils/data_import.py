@@ -1,5 +1,7 @@
 import pickle
 import pdb
+import collections
+from tqdm import tqdm
 
 class Vocab():
 
@@ -11,8 +13,60 @@ class Vocab():
         self.locked_vocab = False
 
     def __len__(self):
-        return len(self.itos)
+        return len(self.stoi)
+    
+    def remove_token(self, token):
+        
+        # This method should only be called from the corpus class,
+        # in particular the corpus.remove_token() method
+        
+        if self.locked_vocab:
+            print('Error: vocab locked')
+            return
+        
+        itoken = self.stoi[token]
+        
+        self.freq['<unk>'] += self.freq[token]
+            
+        #for i in range(itoken, len(self)):
+        #    self.stoi[self.itos[i]] -= 1
 
+        #self.itos.remove(token)
+        self.itos[itoken] = '<unk_del>'
+        del self.stoi[token] 
+        del self.freq[token]
+
+    def remove_token_list(self, token_list):
+        
+        # This method should only be called from the corpus class,
+        # in particular the corpus.remove_token() method
+        
+        if self.locked_vocab:
+            print('Error: vocab locked')
+            return
+        
+        new_stoi = {}
+        new_itos = []
+        ireplaced = {}
+        nreplaced = 0
+        
+        for token in tqdm(self.stoi.keys()):
+            if token in token_list:
+                self.freq['<unk>'] += self.freq[token]
+                del self.freq[token]
+                ireplaced[self.stoi[token]] = self.stoi['<unk>']
+                nreplaced += 1
+            else:
+                new_stoi[token] = len(new_stoi)
+                new_itos.append(token)
+                self.freq[token] = self.freq[token]
+                ireplaced[self.stoi[token]] = new_stoi[token]
+            
+        self.stoi = new_stoi
+        self.itos = new_itos
+        
+        return ireplaced, nreplaced
+        
     def add_token(self, token):
 
         if token not in self.stoi.keys():
@@ -26,10 +80,6 @@ class Vocab():
         self.freq[token] += 1
 
         return self.stoi[token]
-
-    def most_frequent(self):
-
-        return sorted(self.freq.items(), key=lambda kv: kv[1], reverse=True)
 
     def most_frequent(self, to=20):
 

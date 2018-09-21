@@ -4,6 +4,7 @@ import os
 import torch
 import numpy as np
 import pandas as pd
+from tqdm import tqdm
 
 class ITokList():
 
@@ -16,6 +17,28 @@ class ITokList():
     def __len__(self):
 
         return len(self.itoklist)
+    
+    def replace_token(self, token, vocab):
+        
+        # This method should only be called from the corpus class,
+        # in particular the corpus.remove_token() method
+        
+        unk_i = vocab.stoi['<unk>']
+        tok_i = vocab.stoi[token]
+        self.itoklist = [unk_i if x == tok_i else x for x in self.itoklist]
+    
+    def replace_itoken_list(self, i_rem_map):
+        
+        # This method should only be called from the corpus class,
+        # in particular the corpus.remove_token() method
+        
+        n_sub = 0
+        for i, itok in enumerate(self.itoklist):
+            self.itoklist[i] = i_rem_map[itok]
+            if itok != i_rem_map[itok]:
+                n_sub += 1
+       
+        return n_sub
 
     def show_itoklist(self, start=0, to=0):
 
@@ -71,6 +94,8 @@ class WikiCorpus():
     def __init__(self, file_path='./wikitext-2', lines=100, vocab_file=''):
         self.vocab = Vocab()
         self.imported_vocab = False
+        
+        self.specials = ['<pad>', '<eol>', '<unk>', '<upcase>']
 
         if vocab_file != '':
             self.vocab.import_vocab(vocab_file)
@@ -99,22 +124,24 @@ class WikiCorpus():
 
         with open(os.path.join(file_path, filename), encoding='utf8') as f:
 
-            if lines == 0:
-                doc = f.readlines()
-            else:
-                doc = [next(f) for x in range(lines + 1)]
+            for s in self.specials:
+                if s not in self.vocab.stoi.keys(): 
+                    self.vocab.add_token(s)
+                    
+            doc = f.readlines()
 
             text = ''
 
             for l, line in enumerate(doc):
-                text += line.replace('=', '').strip() + ' <eol> '
+                text += (line.replace('=', '').replace('.', ' . ').replace(',', ' , ')\
+                    .replace("'", " '").replace('-', ' - ').replace('?', ' ? ')\
+                    .replace('[', ' [ ').replace(']', ' ] ').replace('!', ' ! ')\
+                    .replace('(', ' ( ').replace(')', ' ) ').replace('\"', ' \" ')\
+                 ).strip() + ' <eol> '
+                if lines > 0 and l >= lines:
+                    break
 
             ilist = []
-
-            self.vocab.add_token('<pad>')
-            self.vocab.add_token('<eol>')
-            self.vocab.add_token('<unk>')
-            self.vocab.add_token('<upcase>')
 
             for char in text.split():
                 lchar = char.lower()
@@ -137,6 +164,41 @@ class WikiCorpus():
         print('Done. ', self.test.batch_matrix.shape, flush=True)
 
         return
+    
+    def remove_token(self, token):
+        
+        if token in self.specials:
+            print('Error: not allowed to remove special token', token)
+            return
+        
+        self.train.replace_token(token, self.vocab)
+        self.valid.replace_token(token, self.vocab)
+        self.test.replace_token(token, self.vocab)
+        
+        self.vocab.remove_token(token)
+        
+    def remove_token_list(self, token_list):
+        
+        for token in token_list:
+            if token in self.specials:
+                print('Note: keeping special token', token)
+                token_list.remove(token)
+                
+        print('Processing {:,} tokens for removal.'.format(len(token_list)))
+        
+        print('Updating corpus vocabulary...', end=' ', flush=True)
+        i_rem_map, n_rem = self.vocab.remove_token_list(token_list)
+        
+        print('{:,} removed.\nReplacing tokens in train...'.format(n_rem), end=' ', flush=True)
+        n_rem = self.train.replace_itoken_list(i_rem_map)
+        
+        print('{:,} substitutions.\nReplacing tokens in valid...'.format(n_rem), end=' ', flush=True)
+        n_rem = self.valid.replace_itoken_list(i_rem_map)
+        
+        print('{:,} substitutions.\nReplacing tokens in test...'.format(n_rem), end=' ', flush=True)
+        n_rem = self.test.replace_itoken_list(i_rem_map)
+        
+        print('{:,} substitutions.\nFinal vocabulary size: {:,} tokens'.format(n_rem, len(self.vocab)), flush=True)
 
 
 class WikiTextDataset(Dataset):
