@@ -7,6 +7,8 @@ import numpy as np
 from sklearn import utils as skutils
 import pdb
 
+pd.options.mode.chained_assignment = None
+
 class ITokListFrame():
 
     def __init__(self, ilist_df, text_col, tag_col):
@@ -189,7 +191,11 @@ class ImdbCorpus():
 
         for r in df.iterrows():
             text = (r[1][text_col].replace('/><br', ' ')\
-                    .replace('/>', ' ').replace('.', ' .') + ' <eol> ').strip()
+                    .replace('/>', ' ').replace('.', ' . ').replace(',', ' , ')\
+                    .replace("'", " '").replace('-', ' - ').replace('?', ' ? ')\
+                    .replace('[', ' [ ').replace(']', ' ] ').replace('!', ' ! ')\
+                    .replace('(', ' ( ').replace(')', ' ) ').replace('. . .', '...') \
+                    + ' <eol> ').strip()
             sent = r[1][tag_col].strip()
 
             ilist = []
